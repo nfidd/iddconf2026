@@ -49,7 +49,7 @@ Throughout the course we will
    
 ```{r outbreak-plot, fig.width=5, fig.height=3, fig.align='center'}
 library(ggplot2)
-library(nfidd)
+library(iddconf2026)
 ### visualise the infection curve
 data(infection_times)
 ggplot(infection_times, aes(x = infection_time)) +
