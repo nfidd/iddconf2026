@@ -27,10 +27,14 @@ If you choose the local setup option, here's what you'll need to do:
 
 1.  Install R and RStudio (use the Visual Editor for best notebook experience)
 2.  Install the `nfidd` R package
-3.  Install cmdstan
-4.  Download course materials (if using the hybrid approach you may not need to do this)
+3.  Download workshop materials (if using the hybrid approach you may not need to do this)
 
-**Don't skip any steps** - they all work together to provide the full course experience.
+**Don't skip any steps** - they all work together to provide the full workshop experience.
+
+::: callout-note
+This workshop works entirely from pre-generated forecasts, so you do **not** need to install `cmdstan` or a C++ toolchain.
+Everything runs from the `nfidd` R package and a few plotting and scoring packages.
+:::
 
 ### Installing R
 
@@ -63,34 +67,6 @@ Then you can check that the installation completed successfully by loading the p
 ```{r load, eval=FALSE}
 library("nfidd")
 ```
-
-### Installing `cmdstan`
-
-The course relies on running stan through the `cmdstanr` **R** package, which itself uses the `cmdstan` software.
-This requires a separate installation step:
-
-```{r cmdstan_install, eval = FALSE}
-cmdstanr::install_cmdstan()
-```
-
-::: callout-note
-This may take a few minutes.
-Also you're likely to see lots of warnings and other messages printed to your screen - don't worry, this is normal and doesn't mean there is a problem.
-:::
-
-If there are any problems with this, you can try (on Windows) to fix them using
-
-```{r cmdstan_toolchain, eval = FALSE}
-cmdstanr::check_cmdstan_toolchain(fix = TRUE)
-```
-
-You can test that you have a working `cmdstanr` setup using
-
-```{r cmdstan_test}
-cmdstanr::cmdstan_version()
-```
-
-For more details, and for links to resources in case something goes wrong, see the [Getting Started with CmdStanr](https://mc-stan.org/cmdstanr/articles/cmdstanr.html) vignette of the package.
 
 ## Accessing the course
 
@@ -152,5 +128,3 @@ If you're returning to the course after some time or joining a live session, you
 
     -   Download the latest version: [[**Download**]{.underline}](https://github.com/nfidd/iddconf2026/archive/refs/heads/main.zip)
     -   Or use `git pull` if you cloned the repository
-
-3.  **You don't need to reinstall cmdstan** unless you're having specific issues with it

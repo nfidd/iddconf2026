@@ -28,7 +28,7 @@ The source file of this session is located at `sessions/forecasting-evaluation.q
 
 ## Libraries used
 
-In this session we will use the `nfidd` package to load a data set of infection times and access stan models and helper functions, the `dplyr` and package for data wrangling, `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
+In this session we will use the `nfidd` package to load a data set of infection times and forecasts, the `dplyr` package for data wrangling, the `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
 
 ```{r libraries, message = FALSE}
 library("nfidd")
@@ -43,14 +43,11 @@ The best way to interact with the material is via the [Visual Editor](https://do
 
 ## Initialisation
 
-We set a random seed for reproducibility. 
+We set a random seed for reproducibility.
 Setting this ensures that you should get exactly the same results on your computer as we do.
-We also set an option that makes `cmdstanr` show line numbers when printing model code.
-This is not strictly necessary but will help us talk about the models.
 
 ```{r}
 set.seed(12345)
-options(cmdstanr_print_line_numbers = TRUE)
 ```
 
 :::
