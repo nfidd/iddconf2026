@@ -2,17 +2,18 @@
 title: "Authors"
 ---
 
-The NFIDD course was developed by the **NFIDD course contributors**:
+This workshop is taught by:
 
-- [Sam Abbott](https://github.com/seabbs)
 - [Kath Sherratt](https://github.com/kathsherratt)
-- [Sebastian Funk](https://github.com/sbfnk)
+- [Sam Abbott](https://github.com/seabbs)
+
+The material is drawn from the [Nowcasting and forecasting infectious disease dynamics](https://nfidd.github.io/nfidd/) course, developed by the **NFIDD course contributors**, including Kath Sherratt, Sam Abbott and [Sebastian Funk](https://github.com/sbfnk).
 
 ## How to Cite
 
-If you use materials from this course in your work, please cite:
+If you use materials from this workshop in your work, please cite the NFIDD course:
 
-> NFIDD course contributors (2025). NFIDD: Nowcasting and Forecasting Infectious Disease Dynamics. Version [VERSION]. DOI: [PLACEHOLDER - Zenodo DOI will be added upon release]
+> NFIDD course contributors (2025). NFIDD: Nowcasting and Forecasting Infectious Disease Dynamics. DOI: [PLACEHOLDER - Zenodo DOI will be added upon release]
 
 ### BibTeX Entry
 
@@ -21,7 +22,6 @@ If you use materials from this course in your work, please cite:
   author = {{Sam Abbott, Katherine Sherratt, Sebastian Funk}},
   title = {{NFIDD: Nowcasting and Forecasting Infectious Disease Dynamics}},
   year = {2025},
-  version = {[VERSION]},
   doi = {[PLACEHOLDER - Zenodo DOI]},
   url = {https://nfidd.github.io/nfidd/}
 }
@@ -36,9 +36,9 @@ All course materials are provided under the [MIT License](https://opensource.org
 We welcome contributions to improve and expand the course materials.
 You can:
 
-- [Report issues or suggest improvements](https://github.com/nfidd/nfidd/issues)
+- [Report issues or suggest improvements](https://github.com/nfidd/iddconf2026/issues)
 - [Join discussions](https://github.com/nfidd/nfidd/discussions)
-- [Submit pull requests](https://github.com/nfidd/nfidd/pulls)
+- [Submit pull requests](https://github.com/nfidd/iddconf2026/pulls)
 
 ## Acknowledgements
 

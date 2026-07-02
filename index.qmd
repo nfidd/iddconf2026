@@ -1,24 +1,31 @@
 ---
-title: "Nowcasting and forecasting infectious disease dynamics"
+title: "What is a forecast, and is it any good?"
 site: distill::distill_website
 comments: false
 about:
   template: jolla
   links:
     - icon: chat-fill
-      text: Dive into the course
-      href: nfidd/sessions/introduction-and-course-overview.html
+      text: Start the workshop
+      href: sessions/introduction-and-course-overview.html
+    - icon: calendar-event
+      text: Timetable
+      href: timetable.html
     - icon: github
       text: Visit us on GitHub
-      href: https://github.com/nfidd/nfidd
+      href: https://github.com/nfidd/iddconf2026
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-A course and living resource for learning about nowcasting and forecasting infectious disease dynamics.
+A half-day workshop for [IDDconf 2026](https://iddconf.com), run on the morning of Tuesday 7 July 2026 by Kath Sherratt and Sam Abbott (LSHTM).
 
-We invite anyone to use the materials here in their own teaching and learning. For questions and discussion of the course or its content, we welcome all users to the [Discussion board](https://github.com/nfidd/nfidd/discussions). We welcome all forms of [contributions, additions and suggestions](https://github.com/nfidd/nfidd/issues) for improving the materials. 
+We explore how to visualise and interpret infectious disease forecasts, evaluate forecast performance and identify limitations, and combine multiple forecasts into ensembles.
+We introduce each concept and then work through examples implemented in R.
 
-All materials here are provided under the permissive [MIT License](https://github.com/nfidd/nfidd/blob/main/LICENSE).
+This workshop is a short, forecasting-focused selection from the fuller course on [Nowcasting and forecasting infectious disease dynamics](https://nfidd.github.io/nfidd/).
+Please see the [timetable](timetable.qmd) for the plan for the morning and [getting started](getting-started.qmd) to set up.
+
+All materials here are provided under the permissive [MIT License](https://github.com/nfidd/iddconf2026/blob/main/LICENSE).
