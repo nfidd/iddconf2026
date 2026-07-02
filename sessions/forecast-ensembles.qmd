@@ -6,11 +6,11 @@ bibliography: ../nfidd.bib
 
 # Introduction
 
-As we saw in the [session on different forecasting models](forecast-models), different modelling approaches have different strength and weaknesses, and we do not usually know in advance which one will produce the best forecast in any given situation.
+Different modelling approaches have different strengths and weaknesses, and we do not usually know in advance which one will produce the best forecast in any given situation.
 We can classify models along a spectrum by how much they include an understanding of underlying processes, or mechanisms; or whether they emphasise drawing from the data using a statistical approach.
 One way to attempt to draw strength from a diversity of approaches is the creation of so-called *forecast ensembles* from the forecasts produced by different models.
 
-In this session, we'll start with forecasts from the models we explored in the [forecasting models](forecasting-models) session and build ensembles of these models. 
+In this session, we'll start with forecasts from three models and build ensembles of these models.
 We will then compare the performance of these ensembles to the individual models and to each other.
 
 ::: {.callout-note .optional collapse="true"}
@@ -36,7 +36,7 @@ Many collaborative forecasting projects and so-called forecasting hubs use quant
 
 ## Objectives
 
-The aim of this session is to introduce the concept of ensembles of forecasts and to evaluate the performance of ensembles of the models we explored in the [forecasting models](forecasting-models) session.
+The aim of this session is to introduce the concept of ensembles of forecasts and to evaluate the performance of ensembles of three individual forecast models.
 
 ::: {.callout-note collapse="true"}
 
@@ -78,11 +78,13 @@ set.seed(123)
 
 # Individual forecast models
 
-In this session we will use the forecasts from the models we explored in the session on [forecasting models](forecasting-models). There all shared the same basic renewal with delays structure but used different models for the evolution of the effective reproduction number over time. These were:
+In this session we will use forecasts from three models.
+They all share the same basic renewal with delays structure but use different models for the evolution of the effective reproduction number over time.
+These were:
 
-- A random walk model
-- A differenced autoregressive model referred to as "More statistical"
-- A simple model of susceptible depletion referred to as "More mechanistic"
+- A random walk model, the baseline model (`rw_forecasts`)
+- A differenced autoregressive model referred to as "More statistical" (`stat_forecasts`)
+- A simple model of susceptible depletion referred to as "More mechanistic" (`mech_forecasts`)
 
 For the purposes of this session the precise details of the models are not critical to the concepts we are exploring.
 

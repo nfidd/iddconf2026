@@ -1,6 +1,6 @@
 ---
 title: "Introduction to the course and the instructors"
-author: "Nowcasting and forecasting of infectious disease dynamics"
+author: "What is a forecast, and is it any good?"
 format:
   revealjs:
     output: slides/introduction-to-the-course-and-the-instructors.html

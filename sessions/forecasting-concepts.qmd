@@ -59,9 +59,9 @@ options(cmdstanr_print_line_numbers = TRUE)
 Forecasting is the process of making predictions about the future based on past and present data.
 In the context of infectious disease epidemiology, forecasting is usually the process of predicting the future course of some metric of infectious disease incidence or prevalence based on past and present data.
 Here we focus on forecasting observed data (the number of individuals with new symptom onset) but forecasts can also be made for other quantities of interest such as the number of infections, the reproduction number, or the number of deaths.
-Epidemiological forecasting is closely related to nowcasting and, when using mechanistic approaches, estimation of the reproduction number. In fact, the model we will use for forecasting is the same as the model we used for nowcasting and estimation of the reproduction number.
-The only difference is that we will extend the model into the future.
-In order to make things simpler we will remove the nowcasting part of the model, but in principle all these approaches could be combined in a single model.
+Epidemiological forecasting is closely related to nowcasting and, when using mechanistic approaches, estimation of the reproduction number.
+A mechanistic model that estimates the reproduction number can be turned into a forecasting model by extending it into the future.
+That is the approach we take here.
 
 The **forecasting paradigm** is to **maximise *sharpness* subject to *calibration*** [@gneiting2007]: forecasts should aim to have narrow uncertainty (sharpness) while remaining correct (calibration).
 Note that sharpness is a property of the forecasts themselves, whereas calibration and other measures of forecast quality (such as bias and accuracy) emerge from comparing forecasts to observed data.
@@ -69,11 +69,23 @@ We will return to the forecasting paradigm and how to evaluate forecasts against
 
 # Extending a model into the future
 
-The model we introduced in the [renewal equation session](R-estimation-and-the-renewal-equation) the reproduction number using a random walk, then used a discrete renewal process to model the number of infections, and convolved these with a delay distribution to model the number of onsets with Poisson observation error.
-Based on what we found in the [nowcasting session](nowcasting) this seems like a reasonable model for the data and so we might want to use it to forecast into the future.
+We forecast using a mechanistic model of the outbreak that we can simulate forward in time.
 
-We can do this by simulating the generative model forward in time. 
-To do this we use the same model as in the renewal equation session but add a `generated quantities` block to create the forecasts.
+::: {.callout-note}
+## The model we are forecasting with
+
+The model is a discrete renewal process for infections.
+The effective reproduction number $R_t$ evolves as a geometric random walk, so $\log R_t$ takes independent normal steps over time.
+Each day's expected infections are given by the renewal equation, combining $R_t$ with past infections weighted by the generation time distribution.
+Expected symptom onsets follow from convolving infections with a delay distribution from infection to onset.
+The observed onsets are then modelled as Poisson draws around these expected onsets.
+The random walk on $R_t$ lets the model track changes in transmission without assuming a fixed epidemic shape.
+:::
+
+This seems like a reasonable model for the data and so we might want to use it to forecast into the future.
+
+We can do this by simulating the generative model forward in time.
+To do this we use the same model but add a `generated quantities` block to create the forecasts.
 This is used in a stan model for any calculations that only depend on other parameter estimates but are not themselves constrained by the data.
 So what does this look like in code? Lets load in the model again and take a look.
 
@@ -103,8 +115,8 @@ Do you see any limitations of this approach?
 
 Before we can forecast we need some data to fit the model to.
 In order to assess the quality of the forecasts we will also need some future (or hold-out) data that we can compare the forecasts to.
-We will use the same simulated data as in the renewal and nowcasting sessions.
-We will try to make a forecast on day 71 (assuming we don't know what the data looks like after that day) as in the nowcasting session.
+We will use a simulated set of symptom onsets as this workshop's example data.
+We will try to make a forecast on day 71, assuming we do not know what the data looks like after that day.
 
 ```{r, load-simulated-onset}
 gen_time_pmf <- make_gen_time_pmf()
@@ -122,7 +134,7 @@ filtered_onset_df <- onset_df |>
 ## Fitting the model and forecast for 28 days into the future
 
 We can now fit the model to the data and then make a forecast.
-This should look very similar to the code we used in the renewal session but with the addition of a non-zero `h` in the data list.
+The only addition compared with fitting the model to data alone is a non-zero `h` in the data list, which sets the number of days to forecast.
 
 ```{r fit_model, results = 'hide', message = FALSE}
 horizon <- 28
