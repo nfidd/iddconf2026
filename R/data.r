@@ -62,3 +62,21 @@
 #'   \item{model}{the name of the model}
 #' }
 "stat_forecasts"
+
+#' Reproduction number forecast and estimate
+#'
+#' A dataset containing draws of the effective reproduction number from the
+#' geometric random walk renewal model, generated using the code in
+#' data-raw/generate-rt-forecast.r. It holds both the reproduction number
+#' forecast made at the cutoff and the estimate made once data up to the end of
+#' the forecast horizon are available, so the forecasting concepts session can
+#' visualise them without fitting the model.
+#' @format A [tibble::tibble()] with 5 columns
+#' \describe{
+#'   \item{day}{the day for which the reproduction number applies}
+#'   \item{.draw}{an ID of the posterior sample}
+#'   \item{.value}{the reproduction number}
+#'   \item{type}{whether the value is a "forecast" or an "estimate"}
+#'   \item{cutoff}{the day on which the forecast was made}
+#' }
+"rt_forecast"

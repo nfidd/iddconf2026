@@ -43,10 +43,10 @@ Additional_repositories:
     https://epiforecasts.r-universe.dev
 Encoding: UTF-8
 Language: en-GB
-RoxygenNote: 7.3.3
 LazyData: true
 LazyDataCompression: xz
 Roxygen: list(roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet"))
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
+Config/roxygen2/version: 8.0.0
