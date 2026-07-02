@@ -24,7 +24,6 @@ What is a forecast, and is it any good?
 - a **forecast** is an unconditional statement about the future
 - meaningful forecasts are **probabilistic**
 - visualising a forecast means showing the **predictive distribution**, not a single line
-- we plot the median with uncertainty intervals against later observed data
 
 ### Evaluation {.smaller}
 
