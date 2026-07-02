@@ -1,0 +1,91 @@
+---
+title: "From an epidemiological line list to informing decisions in real-time"
+author: "What is a forecast, and is it any good?"
+engine: knitr
+format:
+  revealjs:
+    output: slides/from-line-list-to-decisions.html
+    footer: "From an epidemiological line list to informing decisions in real-time"
+    slide-level: 3
+---
+
+### "We were losing ourselves in details [...] all we needed to know is, are the number of cases rising, falling or levelling off?"
+
+Hans Rosling, Liberia, 2014
+
+. . .
+
+- what **is** the number of cases now?
+- is it rising/falling and by how much?
+- what does this mean for the near future?
+
+### Data usually looks like this
+
+![](figures/linelist.png)
+
+### Aggregated data can look like this {.smaller}
+
+![](figures/mpox_delayed.png)
+
+[UKHSA, 2022](https://www.gov.uk/government/publications/monkeypox-outbreak-technical-briefings/investigation-into-monkeypox-outbreak-in-england-technical-briefing-1) <br>
+[Overton et al., *PLOS Comp Biol*, 2023](https://doi.org/10.1371/journal.pcbi.1011463)
+
+### Aim of this course:
+
+How can we use data typically collected in an outbreak to answer questions like
+
+- what **is** the number of cases now? (*nowcasting*)
+- is it rising/falling and by how much? (*$R_t$ estimation*)
+- what does this mean for the near future (*forecasting*)
+
+in real time.
+
+### Approach
+
+Throughout the course we will
+
+1. use models to simulate data sets in **R** <br>
+(the *generative model* of the simulated data)
+   
+```{r outbreak-plot, fig.width=5, fig.height=3, fig.align='center'}
+library(ggplot2)
+library(nfidd)
+### visualise the infection curve
+data(infection_times)
+ggplot(infection_times, aes(x = infection_time)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(n.breaks = 10) +
+  labs(
+    x = "Infection time (in days)", y = "Number of infections",
+    title = "Infections during an outbreak"
+  ) +
+  theme_minimal()
+```
+
+### Approach
+
+Throughout the course we will
+
+2. apply generative models to simulated data in **stan** to
+   - learn about the system (conduct inference)
+   - **make predictions** (nowcasting/forecasting)
+
+### Timeline
+
+::: {.incremental}
+- delay distributions and how to estimate them (day 1)
+- $R_t$ estimation and the generation interval (day 1)
+- nowcasting (day 2)
+- forecasting and evaluation, ensemble methods (day 2)
+- applications (day 3)
+:::
+
+#
+
+To start the course go to:
+[https://nfidd.github.io/nfidd/](https://nfidd.github.io/nfidd/)
+and get started on the first sesion (*Probability distributions and parameter estimation*)
+
+#
+
+[Return to the session](../introduction-and-course-overview)

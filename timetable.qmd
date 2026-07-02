@@ -14,11 +14,12 @@ The workshop is a short, forecasting-focused selection from the fuller course on
 | Time | Session / activity | Content |
 |---|---|---|
 | 09:00–09:15 | Session 0 · Introduction & overview | [Slides](sessions/slides/introduction-to-the-course-and-the-instructors), [Getting started](getting-started) |
-| 09:15–10:20 | Session 1 · Forecasting concepts & visualisation | [Slides](sessions/slides/introduction-to-forecasting), [Practice](sessions/forecasting-concepts) |
-| 10:20–11:25 | Session 2 · Forecast evaluation — is it any good? | [Slides](sessions/slides/forecast-evaluation), [Practice](sessions/forecast-evaluation) |
-| 11:25–11:45 | *Coffee break* | |
-| 11:45–12:25 | Session 3 · Forecast ensembles | [Slides](sessions/slides/introduction-to-ensembles), [Practice](sessions/forecast-ensembles) |
-| 12:25–12:30 | Session 4 · Summary & discussion | [Summary](sessions/slides/closing), [Further reading](sessions/end-of-course-summary-and-discussion) |
+| 09:15–10:05 | Session 1 · Forecasting concepts & visualisation | [Slides](sessions/slides/introduction-to-forecasting), [Practice](sessions/forecasting-concepts) |
+| 10:05–10:45 | Session 2 · Forecast evaluation — is it any good? | [Slides](sessions/slides/forecast-evaluation), [Practice](sessions/forecast-evaluation) |
+| 10:45–11:05 | *Coffee break* | |
+| 11:05–11:45 | Session 3 · Forecasting models | [Slides](sessions/slides/introduction-to-the-spectrum-of-forecasting-models), [Practice](sessions/forecasting-models) |
+| 11:45–12:25 | Session 4 · Forecast ensembles | [Slides](sessions/slides/introduction-to-ensembles), [Practice](sessions/forecast-ensembles) |
+| 12:25–12:30 | Session 5 · Summary & discussion | [Summary](sessions/slides/closing), [Further reading](sessions/end-of-course-summary-and-discussion) |
 :::
 
 The times above are a guide.

@@ -26,14 +26,14 @@ Each session in this course uses R code for demonstration. All the content is se
 If you choose the local setup option, here's what you'll need to do:
 
 1.  Install R and RStudio (use the Visual Editor for best notebook experience)
-2.  Install the `nfidd` R package
+2.  Install the `iddconf2026` R package
 3.  Download workshop materials (if using the hybrid approach you may not need to do this)
 
 **Don't skip any steps** - they all work together to provide the full workshop experience.
 
 ::: callout-note
 This workshop works entirely from pre-generated forecasts, so you do **not** need to install `cmdstan` or a C++ toolchain.
-Everything runs from the `nfidd` R package and a few plotting and scoring packages.
+Everything runs from the `iddconf2026` R package and a few plotting and scoring packages.
 :::
 
 ### Installing R
@@ -49,9 +49,9 @@ Everything runs from the `nfidd` R package and a few plotting and scoring packag
 
 Before you get started with the course, you will first need to install the following software.
 
-#### Installation of the `nfidd` package
+#### Installation of the `iddconf2026` package
 
-To install the packages needed in the course, including the `nfidd` package that contains data files and helper functions used throughout:
+To install the packages needed in the course, including the `iddconf2026` package that contains data files and helper functions used throughout:
 
 ```{r install, eval=FALSE}
 options(repos = c(
@@ -65,7 +65,7 @@ install.packages("nfidd", dependencies = TRUE)
 Then you can check that the installation completed successfully by loading the package into your **R** session:
 
 ```{r load, eval=FALSE}
-library("nfidd")
+library("iddconf2026")
 ```
 
 ## Accessing the course

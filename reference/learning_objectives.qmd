@@ -21,6 +21,12 @@ While examples often use outbreak scenarios for clarity, participants should con
 - ability to visualise a probabilistic forecast and compare it to what was later observed
 - familiarity with the forecasting paradigm of maximising sharpness subject to calibration
 
+## Forecasting models
+
+- awareness of forecasting models as a spectrum from mechanistic to statistical
+- understanding of how mechanistic structure (e.g. susceptible depletion) and statistical structure (e.g. autoregressive and differenced models) change a forecast
+- ability to visually compare forecasts from several models
+
 ## Evaluating forecasts
 
 - ability to visually assess forecasts

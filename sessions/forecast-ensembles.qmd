@@ -6,11 +6,11 @@ bibliography: ../nfidd.bib
 
 # Introduction
 
-Different modelling approaches have different strengths and weaknesses, and we do not usually know in advance which one will produce the best forecast in any given situation.
+As we saw in the [forecasting models](forecasting-models) session, different modelling approaches have different strengths and weaknesses, and we do not usually know in advance which one will produce the best forecast in any given situation.
 We can classify models along a spectrum by how much they include an understanding of underlying processes, or mechanisms; or whether they emphasise drawing from the data using a statistical approach.
 One way to attempt to draw strength from a diversity of approaches is the creation of so-called *forecast ensembles* from the forecasts produced by different models.
 
-In this session, we'll start with forecasts from three models and build ensembles of these models.
+In this session, we'll start with forecasts from the models we explored in the [forecasting models](forecasting-models) session and build ensembles of these models.
 We will then compare the performance of these ensembles to the individual models and to each other.
 
 ::: {.callout-note .optional collapse="true"}
@@ -36,7 +36,7 @@ Many collaborative forecasting projects and so-called forecasting hubs use quant
 
 ## Objectives
 
-The aim of this session is to introduce the concept of ensembles of forecasts and to evaluate the performance of ensembles of three individual forecast models.
+The aim of this session is to introduce the concept of ensembles of forecasts and to evaluate the performance of ensembles of the models we explored in the [forecasting models](forecasting-models) session.
 
 ::: {.callout-note collapse="true"}
 
@@ -48,11 +48,11 @@ The source file of this session is located at `sessions/forecast-ensembles.qmd`.
 
 ## Libraries used
 
-In this session we will use the `nfidd` package to load a data set of infection times and forecasts, the `dplyr` and `tidyr` packages for data wrangling, the `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
+In this session we will use the `iddconf2026` package to load a data set of infection times and forecasts, the `dplyr` and `tidyr` packages for data wrangling, the `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
 We will also use `qrensemble` for quantile regression averaging and `lopensemble` for mixture ensembles (also called linear opinion pool).
 
 ```{r libraries, message = FALSE}
-library("nfidd")
+library("iddconf2026")
 library("dplyr")
 library("tidyr")
 library("ggplot2")
@@ -78,7 +78,7 @@ set.seed(123)
 
 # Individual forecast models
 
-In this session we will use forecasts from three models.
+In this session we will use the forecasts from the models we explored in the [forecasting models](forecasting-models) session.
 They all share the same basic renewal with delays structure but use different models for the evolution of the effective reproduction number over time.
 These were:
 

@@ -1,29 +1,40 @@
 ---
-title: "Introduction and workshop overview"
+title: "Introduction and course overview"
 order: 0
 ---
 
-[Introduction to the course and the instructors](slides/introduction-to-the-course-and-the-instructors)
+[From an epidemiological line list to informing decisions in real-time](slides/from-line-list-to-decisions)
 
 ### Aim of the workshop
 
-This half-day workshop asks a simple question.
-What is a forecast, and is it any good?
+Data collected in an outbreak, or in routine surveillance, is used to answer questions like
 
-We will work through how to make sense of forecasts of infectious disease dynamics by addressing questions like
+-   What is the number of cases now (*nowcasting*)
+-   Are infections rising or falling and by how much (*$R_t$ estimation*)
+-   What does this mean for the near future (*forecasting*)
+
+This workshop focuses on the last of these, and on a question that matters just as much once a forecast has been made.
 
 -   What is a forecast, and how do we visualise and interpret one?
--   How do we tell whether a forecast is any good (*evaluation*)?
+-   Is the forecast any good (*evaluation*)?
 -   How do we combine forecasts from several models (*ensembles*)?
 
-A forecast is an unconditional statement about the future.
-Meaningful forecasts are probabilistic, so we need ways to visualise the uncertainty they carry and to judge how well that uncertainty matches what actually happened.
+To make sense of forecasts we need to understand the epidemiological processes that create the data we typically have available, and the challenges of doing this analysis *in real time* rather than retrospectively.
 
 ::: callout
-Forecasting infectious disease dynamics is hard.
-Transmission is noisy, data are incomplete, and the future is genuinely uncertain.
-Rather than hoping for a single correct prediction, we work with probabilistic forecasts and assess them on how well their stated uncertainty holds up against observed data.
+Let's look at infectious disease surveillance data from the perspective of an individual infection.
+There are two types of processes happening:
+
+-   upwards, from an individual infection through to being recorded in surveillance data; and
+
+-   outwards, from each infection spreading to cause new infections in the population.
+
+Both of these processes involve time delays which makes analysing data in real time especially tricky.
 :::
+
+A forecast is a probabilistic statement about what this data will do next.
+Making one is only half the job.
+Much of this workshop is about the other half, telling whether a forecast is any good by confronting it with what actually happened, and using that to compare and combine models.
 
 ### Why this workshop?
 
@@ -40,19 +51,14 @@ Each session in the workshop
 -   mainly consists of interactive content that you work through in **R**;
 -   marks optional and additional material clearly (boxes labelled *optional*, plus a "Going further" section at the end of each session).
 
-For those attending in person the workshop also
+We work throughout from forecasts we made earlier, so you can focus on interpreting, evaluating and combining them without waiting for models to fit.
 
--   has multiple instructors ready to answer questions;
--   pauses at several points to discuss observations and address questions together;
--   ends with a wrap-up and discussion where we review the material.
+For those attending in person the workshop also has multiple instructors ready to answer questions, pauses at several points to discuss observations together, and ends with a wrap-up and discussion.
 
-### Timeline for the workshop
-
-The workshop runs as a single half-day session.
-If you are studying this on your own using the web site you can work through the material at your own pace.
-Broadly, we cover
+### What we cover
 
 -   forecasting concepts and visualisation
+-   the spectrum of forecasting models
 -   forecast evaluation
 -   forecast ensembles
 
