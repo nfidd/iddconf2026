@@ -1,0 +1,8 @@
+---
+title: "Getting help"
+order: 4
+comments: false
+---
+
+For any questions about the course or its content, feel free to use the <a href="https://github.com/nfidd/nfidd/discussions">Discussion
+  board</a>

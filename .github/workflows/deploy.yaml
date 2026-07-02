@@ -1,0 +1,81 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 * *'  # Run at 00:00 on the 1st of every month
+  push:
+    branches: [main]
+  pull_request:
+  merge_group:
+
+name: deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      LANG: "en_US.UTF-8"
+      LC_ALL: "en_US.UTF-8"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+          extra-repositories: |
+            https://production.r-multiverse.org/2025-12-15
+            https://epiforecasts.r-universe.dev
+
+      # Cache Quarto freeze directory for computational results
+      # This prevents re-running expensive computations (Stan models, simulations)
+      - name: Cache Quarto freeze
+        uses: actions/cache@v6
+        with:
+          path: _freeze
+          # Rendered output depends on the nfidd package (the knit_print method, the
+          # printed Stan code), so a package change has to invalidate the freeze. The
+          # package hash sits in the restore-keys prefix, so a package change leaves no
+          # cache to fall back to and forces a cold render; session-only edits keep the
+          # prefix stable, reuse a sibling freeze, and re-render just the changed page.
+          key: quarto-freeze-${{ runner.os }}-${{ hashFiles('R/**', 'inst/**', 'DESCRIPTION', 'NAMESPACE') }}-${{ hashFiles('sessions/**/*.qmd', 'sessions/**/*.Rmd') }}
+          restore-keys: |
+            quarto-freeze-${{ runner.os }}-${{ hashFiles('R/**', 'inst/**', 'DESCRIPTION', 'NAMESPACE') }}-
+
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages:
+            any::gh,
+            any::knitr,
+            any::rmarkdown,
+            local::.
+
+      - name: Install cmdstan
+        uses: epinowcast/actions/install-cmdstan@v1
+        with:
+          cmdstan-version: 'latest'
+          num-cores: 2
+
+      - name: Render site
+        run: quarto render
+
+      - name: Upload website
+        uses: actions/upload-artifact@v7
+        if: github.event_name == 'pull_request'
+        with:
+          name: site
+          retention-days: 5
+          path: _site
+
+      - name: Deploy to GitHub pages 🚀
+        if: github.ref_name == 'main'
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
+        with:
+          branch: gh-pages
+          folder: _site
+          single-commit: true
+          clean: true

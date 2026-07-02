@@ -1,0 +1,137 @@
+---
+title: "Session timetable"
+order: 1
+comments: false
+---
+
+# Day 1: Delays and estimating the effective reproduction number
+
+**Monday June 22**
+
+## Session 0: Introduction and course overview
+
+Monday June 22: 09.00-09.30
+
+-   [Introduction](../sessions/slides/introduction-to-the-course-and-the-instructors): the course and the instructors (10 mins)
+-   [Motivating the course](../sessions/slides/from-line-list-to-decisions): From an epidemiological line list to informing decisions in real-time (20 mins)
+
+## Getting set up
+
+Monday June 22: 09.30-10.15
+
+-   [Getting set up for the course](../getting-started): installing R, the `nfidd` package and cmdstan, and checking everyone's environment is working
+
+## Session 1: Delay distributions
+
+Monday June 22: 10.15-10.30 and 11.00-11.45
+
+-   [Introduction](../sessions/slides/introduction-to-epidemiological-delays): epidemiological delays and how to represent them with probability distributions (10 mins)
+-   [Practice](../sessions/delay-distributions): simulate and estimate epidemiological delays (45 mins)
+-   Wrap up (5 mins)
+
+## Session 2: Biases in delay distributions
+
+Monday June 22: 11.45-12.30 and 14.00-14.45
+
+-   [Introduction](../sessions/slides/introduction-to-biases-in-epidemiological-delays): biases in delay distributions (10 mins)
+-   [Practice](../sessions/biases-in-delay-distributions): 
+    - simulating biases in delay distributions and estimating delays without adjustment on these data (35 mins)
+    - estimating delay distributions with adjustments for bias (35 mins)
+-   Wrap up (10 mins)
+
+## Session 3: Using delay distributions to model the data generating process of an epidemic
+
+Monday June 22: 14.45-15.30
+
+-   [Introduction](../sessions/slides/convolutions): Using delay distributions to model the data generating process of an epidemic (15 mins)
+-   [Practice](../sessions/using-delay-distributions-to-model-the-data-generating-process-of-an-epidemic): implementing a convolution model and identifying potential problems (30 mins)
+
+## Session 4: $R_t$ estimation and the renewal equation
+
+Monday June 22: 16.00-17.30
+
+-   [Introduction](../sessions/slides/introduction-to-reproduction-number): the time-varying reproduction number (10 mins)
+-   [Practice](../sessions/R-estimation-and-the-renewal-equation): 
+    - using the renewal equation to estimate R (35 mins)
+    - combining $R_t$ estimation with delay distribution convolutions (35 mins)
+-   Wrap up (10 mins)
+
+# Day 2: An introduction to nowcasting and forecasting
+
+**Tuesday June 23**
+
+Tuesday June 23: 09.00-09.15
+
+-   Day 1 review (15 mins)
+
+## Session 5: Nowcasting concepts
+
+Tuesday June 23: 09.15-10.30
+
+-   [Introduction](../sessions/slides/introduction-to-nowcasting): nowcasting as a right-truncation problem (10 mins)
+-   [Practice](../sessions/nowcasting): 
+    - simulating the delay distribution (25 mins)
+    - nowcasting using pre-estimated delay distributions (30 mins)
+-   Wrap up (10 mins)
+
+## Session 6: Nowcasting with an unknown reporting delay
+
+Tuesday June 23: 11.00-12.30
+
+-   [Introduction](../sessions/slides/introduction-to-joint-estimation-of-nowcasting-and-reporting-delays): joint estimation of delays and nowcasts (10 mins)
+-   [Practice](../sessions/joint-nowcasting): joint estimation of delays and nowcasts (70 mins)
+-   Wrap up (10 mins)
+
+## Session 7: Forecasting concepts
+
+Tuesday June 23: 14.00-14.45
+
+-   [Introduction](../sessions/slides/introduction-to-forecasting): forecasting as an epidemiological problem, and its relationship with nowcasting and $R_t$ estimation (10 mins)
+-   [Practice](../sessions/forecasting-concepts): extending a model into the future and visualising your forecast (30 minutes)
+-   Wrap up (5 minutes)
+
+## Session 8: Forecast evaluation
+
+Tuesday June 23: 14.45-15.30
+
+-   [Introduction](../sessions/slides/forecast-evaluation): quantitatively evaluating forecasts (10 mins)
+-   [Practice](../sessions/forecast-evaluation): evaluating forecasts with a range of metrics (30 mins)
+-   Wrap up (5 mins)
+
+## Session 9: Forecasting models
+
+Tuesday June 23: 16.00-17.30
+
+-   [Introduction](../sessions/slides/introduction-to-the-spectrum-of-forecasting-models): a spectrum of forecasting models (10 mins)
+-   [Practice](../sessions/forecasting-models): evaluating forecasts from a range of models (60 mins)
+-   Wrap up & discussion (20 mins)
+
+# Day 3: Forecast ensembles, methods in the real world and course summary
+
+**Wednesday June 24**
+
+Wednesday June 24: 09.00-09.15
+
+-   Day 2 review (15 mins)
+
+## Session 10: Forecasting with ensembles
+
+Wednesday June 24: 09.15-10.30
+
+-   [Introduction](../sessions/slides/introduction-to-ensembles): strategies for collating and combining models (10 mins)
+-   [Practice](../sessions/forecast-ensembles): evaluating methods for ensemble forecasts (55 mins)
+-   Wrap up (10 mins)
+
+## Session 11: Methods in the real world
+
+Wednesday June 24: 11.00-12.00
+
+-   Presentations and Q&A on uses of nowcasts & forecasts in the real world (60 mins)
+
+## Session 12: End of course summary
+
+Wednesday June 24: 12.00-12.30
+
+-   [Summary](../sessions/slides/closing) of the course (10 mins)
+-   Final discussion and closing (20 mins)
+    - [Further reading](../sessions/end-of-course-summary-and-discussion)
