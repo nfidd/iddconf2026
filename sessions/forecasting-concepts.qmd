@@ -305,7 +305,7 @@ The vertical dashed line represents the point at which we started forecasting.
 :::
 
 ::: {.callout-tip}
-## Take 5 minutes
+## Take 2 minutes
 Can you use this plot to explain why the forecast of onsets looks the way it does?
 :::
 

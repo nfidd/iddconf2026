@@ -474,7 +474,7 @@ sc_forecasts |>
 ```
 
 ::: {.callout-tip}
-## Take 5 minutes
+## Take 2 minutes
 What do you think of the PIT histograms?
 :::
 
