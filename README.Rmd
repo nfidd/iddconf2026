@@ -27,6 +27,17 @@ quarto::quarto_render()
 
 ## Contributors
 
+
+
+
+
+
+
+
+
+
+
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -35,7 +46,26 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 
 ### Code
 
-<a href="https://github.com/nfidd/iddconf2026/commits?author=seabbs">seabbs</a>
+
+<a href="https://github.com/nfidd/nfidd/commits?author=sbfnk">sbfnk</a>, 
+<a href="https://github.com/nfidd/nfidd/commits?author=seabbs">seabbs</a>, 
+<a href="https://github.com/nfidd/nfidd/commits?author=kathsherratt">kathsherratt</a>, 
+<a href="https://github.com/nfidd/nfidd/commits?author=dependabot[bot]">dependabot[bot]</a>, 
+<a href="https://github.com/nfidd/nfidd/commits?author=github-actions[bot]">github-actions[bot]</a>, 
+<a href="https://github.com/nfidd/nfidd/commits?author=jamesmbaazam">jamesmbaazam</a>, 
+<a href="https://github.com/nfidd/nfidd/commits?author=ManuelStapper">ManuelStapper</a>, 
+<a href="https://github.com/nfidd/nfidd/commits?author=zsusswein">zsusswein</a>
+
+
+
+### Issues
+
+
+<a href="https://github.com/nfidd/nfidd/issues?q=is%3Aissue+author%3Atoshiakiasakura">toshiakiasakura</a>, 
+<a href="https://github.com/nfidd/nfidd/issues?q=is%3Aissue+author%3Ajcken95">jcken95</a>, 
+<a href="https://github.com/nfidd/nfidd/issues?q=is%3Aissue+author%3ADegoot-AM">Degoot-AM</a>, 
+<a href="https://github.com/nfidd/nfidd/issues?q=is%3Aissue+author%3Aepiforecasts-workflows">epiforecasts-workflows</a>
+
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
@@ -45,3 +75,15 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 
 All materials are provided under the permissive
 [MIT License](https://github.com/nfidd/iddconf2026/blob/main/LICENSE).
+
+
+
+
+
+
+
+
+
+
+
+
