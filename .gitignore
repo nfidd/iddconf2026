@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 _site
+site_libs/
 .DS_Store
 *_files/
 /.quarto/

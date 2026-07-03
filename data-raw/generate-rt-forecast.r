@@ -1,0 +1,90 @@
+library("iddconf2026")
+library("dplyr")
+library("tidybayes")
+
+# Generate the reproduction number forecast/estimate data used in the
+# "Visualising the forecast of the reproduction number" section of the
+# forecasting concepts session. We fit the random walk renewal model once at
+# the forecast cutoff (producing a forecast of R_t) and once using data up to
+# the end of the forecast horizon (producing an estimate of R_t over the whole
+# period), then combine the draws so the session can load them directly rather
+# than fitting the model live.
+
+set.seed(123)
+
+gen_time_pmf <- make_gen_time_pmf()
+ip_pmf <- make_ip_pmf()
+onset_df <- simulate_onsets(
+  make_daily_infections(infection_times), ip_pmf
+)
+
+cutoff <- 71
+horizon <- 14
+
+mod <- nfidd_cmdstan_model("estimate-inf-and-r-rw-forecast")
+
+# forecast: fit to data up to the cutoff and forecast the horizon
+filtered_onset_df <- onset_df |>
+  filter(day <= cutoff)
+
+data <- list(
+  n = nrow(filtered_onset_df),
+  I0 = 1,
+  obs = filtered_onset_df$onsets,
+  gen_time_max = length(gen_time_pmf),
+  gen_time_pmf = gen_time_pmf,
+  ip_max = length(ip_pmf) - 1,
+  ip_pmf = ip_pmf,
+  h = horizon
+)
+
+rw_forecast <- nfidd_sample(
+  mod, data = data, adapt_delta = 0.95,
+  init = \() list(init_R = 1, rw_sd = 0.01)
+)
+
+# estimate: fit to all data up to the end of the forecast horizon
+long_onset_df <- onset_df |>
+  filter(day <= cutoff + horizon)
+
+long_data <- list(
+  n = nrow(long_onset_df),
+  I0 = 1,
+  obs = long_onset_df$onsets,
+  gen_time_max = length(gen_time_pmf),
+  gen_time_pmf = gen_time_pmf,
+  ip_max = length(ip_pmf) - 1,
+  ip_pmf = ip_pmf,
+  h = 0
+)
+
+rw_long <- nfidd_sample(
+  mod, data = long_data, adapt_delta = 0.95,
+  init = \() list(init_R = 1, rw_sd = 0.01)
+)
+
+# fitted R during the training period, plus the forecast R over the horizon
+forecast_r <- rw_forecast |>
+  gather_draws(R[day]) |>
+  ungroup() |>
+  mutate(type = "forecast")
+
+forecast_r <- rw_forecast |>
+  gather_draws(forecast_R[day]) |>
+  ungroup() |>
+  mutate(day = day + cutoff, type = "forecast") |>
+  bind_rows(forecast_r)
+
+# R estimated using the whole time series
+long_r <- rw_long |>
+  gather_draws(R[day]) |>
+  ungroup() |>
+  mutate(type = "estimate")
+
+# combine, keep 1000 draws per type to keep the data small
+rt_forecast <- bind_rows(forecast_r, long_r) |>
+  filter(.draw <= 1000) |>
+  select(day, .draw, .value, type) |>
+  mutate(cutoff = cutoff)
+
+usethis::use_data(rt_forecast, overwrite = TRUE, compress = "xz")

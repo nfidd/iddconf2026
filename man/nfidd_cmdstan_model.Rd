@@ -7,7 +7,7 @@
 nfidd_cmdstan_model(
   model_name = NULL,
   model_file = NULL,
-  include_paths = getOption("nfidd.stan_path", nfidd::nfidd_stan_path()),
+  include_paths = getOption("nfidd.stan_path", iddconf2026::nfidd_stan_path()),
   ...
 )
 }
@@ -42,7 +42,7 @@ if (!is.null(cmdstanr::cmdstan_version(error_on_NA = FALSE))) {
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other modelhelpers: 
-\code{\link{nfidd_sample}()}
+Other modelhelpers:
+\code{\link[=nfidd_sample]{nfidd_sample()}}
 }
 \concept{modelhelpers}

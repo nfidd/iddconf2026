@@ -6,11 +6,11 @@ bibliography: ../nfidd.bib
 
 # Introduction
 
-As we saw in the [session on different forecasting models](forecast-models), different modelling approaches have different strength and weaknesses, and we do not usually know in advance which one will produce the best forecast in any given situation.
+As we saw in the [forecasting models](forecasting-models) session, different modelling approaches have different strengths and weaknesses, and we do not usually know in advance which one will produce the best forecast in any given situation.
 We can classify models along a spectrum by how much they include an understanding of underlying processes, or mechanisms; or whether they emphasise drawing from the data using a statistical approach.
 One way to attempt to draw strength from a diversity of approaches is the creation of so-called *forecast ensembles* from the forecasts produced by different models.
 
-In this session, we'll start with forecasts from the models we explored in the [forecasting models](forecasting-models) session and build ensembles of these models. 
+In this session, we'll start with forecasts from the models we explored in the [forecasting models](forecasting-models) session and build ensembles of these models.
 We will then compare the performance of these ensembles to the individual models and to each other.
 
 ::: {.callout-note .optional collapse="true"}
@@ -48,11 +48,11 @@ The source file of this session is located at `sessions/forecast-ensembles.qmd`.
 
 ## Libraries used
 
-In this session we will use the `nfidd` package to load a data set of infection times and access stan models and helper functions, the `dplyr` and `tidyr` packages for data wrangling, `ggplot2` library for plotting, the `tidybayes` package for extracting results of the inference and the `scoringutils` package for evaluating forecasts.
+In this session we will use the `iddconf2026` package to load a data set of infection times and forecasts, the `dplyr` and `tidyr` packages for data wrangling, the `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
 We will also use `qrensemble` for quantile regression averaging and `lopensemble` for mixture ensembles (also called linear opinion pool).
 
 ```{r libraries, message = FALSE}
-library("nfidd")
+library("iddconf2026")
 library("dplyr")
 library("tidyr")
 library("ggplot2")
@@ -78,11 +78,13 @@ set.seed(123)
 
 # Individual forecast models
 
-In this session we will use the forecasts from the models we explored in the session on [forecasting models](forecasting-models). There all shared the same basic renewal with delays structure but used different models for the evolution of the effective reproduction number over time. These were:
+In this session we will use the forecasts from the models we explored in the [forecasting models](forecasting-models) session.
+They all share the same basic renewal with delays structure but use different models for the evolution of the effective reproduction number over time.
+These were:
 
-- A random walk model
-- A differenced autoregressive model referred to as "More statistical"
-- A simple model of susceptible depletion referred to as "More mechanistic"
+- A random walk model, the baseline model (`rw_forecasts`)
+- A differenced autoregressive model referred to as "More statistical" (`stat_forecasts`)
+- A simple model of susceptible depletion referred to as "More mechanistic" (`mech_forecasts`)
 
 For the purposes of this session the precise details of the models are not critical to the concepts we are exploring.
 
@@ -183,7 +185,6 @@ However, the mean is preferred when forecasters have more faith in models that d
 The procedure of calculating quantiles of a new distribution as a weighted average of quantiles of constituent distributions (e.g., different measurements) is called a *Vincent average*, after the biologist Stella Vincent who described this as early as 1912 when studying the function of whiskers in the behaviour of white rats.
 
 :::
-
 
 #### Construction
 
@@ -304,7 +305,6 @@ plot_multiple_forecasts +
   scale_y_log10()
 ```
 
-
 ::: {.callout-tip}
 ##### Take 2 minutes
 How do these ensembles compare to the individual models?
@@ -368,6 +368,17 @@ What do you think the scores are telling you? Which model do you think is best?
 What other scoring breakdowns might you want to look at?
 
 - There might be variation over forecast dates or horizons between the different ensemble methods
+:::
+
+::: {.callout-tip .optional collapse="true"}
+## Interactive: WIS → CRPS
+
+```{=html}
+<iframe class="nfidd-embed" src="../interactive/forecast-evaluation.html?embed=wis" title="WIS interactive" loading="lazy" style="width:100%;height:760px;border:1px solid #e5e7eb;border-radius:10px;background:#fff"></iframe>
+<script>(function(){if(window.__nfiddEmbedInit)return;window.__nfiddEmbedInit=1;window.addEventListener('message',function(ev){var h=ev&&ev.data&&ev.data.nfiddEmbedHeight;if(!h)return;document.querySelectorAll('iframe.nfidd-embed').forEach(function(f){if(f.contentWindow===ev.source)f.style.height=(h+24)+'px';});});})();</script>
+```
+
+Add prediction intervals and watch the WIS converge to the CRPS, with the same dispersion / over / under split.
 :::
 
 ### Unweighted ensembles of filtered models
@@ -710,6 +721,17 @@ lop_ensembles <- lop_ensembles_obj |>
 
 ```
 
+::: {.callout-tip .optional collapse="true"}
+## Interactive: opinion pool vs quantile averaging
+
+```{=html}
+<iframe class="nfidd-embed" src="../interactive/forecast-ensembles.html?embed=headtohead" title="opinion pool vs quantile averaging interactive" loading="lazy" style="width:100%;height:900px;border:1px solid #e5e7eb;border-radius:10px;background:#fff"></iframe>
+<script>(function(){if(window.__nfiddEmbedInit)return;window.__nfiddEmbedInit=1;window.addEventListener('message',function(ev){var h=ev&&ev.data&&ev.data.nfiddEmbedHeight;if(!h)return;document.querySelectorAll('iframe.nfidd-embed').forEach(function(f){if(f.contentWindow===ev.source)f.style.height=(h+24)+'px';});});})();</script>
+```
+
+Average probabilities (opinion pool) vs quantiles (Vincent) — and watch them diverge.
+:::
+
 ## Compare the different ensembles
 
 We have created a number of ensembles which we can now compare.
@@ -865,6 +887,17 @@ How do the weighted ensembles compare to the simple ensembles on the natural and
 ::: {.callout-note collapse="true"}
 #### Solution
 The best ensembles slightly outperform some of the simple ensembles but there is no obvious benefit from using weighted ensembles. Why might this be the case?
+:::
+
+::: {.callout-tip .optional collapse="true"}
+## Interactive: interval coverage
+
+```{=html}
+<iframe class="nfidd-embed" src="../interactive/forecast-evaluation.html?embed=coverage" title="interval coverage interactive" loading="lazy" style="width:100%;height:720px;border:1px solid #e5e7eb;border-radius:10px;background:#fff"></iframe>
+<script>(function(){if(window.__nfiddEmbedInit)return;window.__nfiddEmbedInit=1;window.addEventListener('message',function(ev){var h=ev&&ev.data&&ev.data.nfiddEmbedHeight;if(!h)return;document.querySelectorAll('iframe.nfidd-embed').forEach(function(f){if(f.contentWindow===ev.source)f.style.height=(h+24)+'px';});});})();</script>
+```
+
+A calibration check for quantile forecasts: does a 90% prediction interval actually contain the truth 90% of the time?
 :::
 
 # Going further

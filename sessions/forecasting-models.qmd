@@ -6,8 +6,9 @@ bibliography: ../nfidd.bib
 
 # Introduction
 
-We can classify models along a spectrum by how much they include an understanding of underlying processes, or mechanisms; or whether they emphasise drawing from the data using a statistical approach. 
-In this session, we'll start with the renewal model that we've been using and explore adding both more mechanistic structure and then more statistical structure to the model. We'll again evaluate these models to see what effect these different approaches might have.
+We can classify models along a spectrum by how much they include an understanding of underlying processes, or mechanisms; or whether they emphasise drawing from the data using a statistical approach.
+In this session, we'll start with the renewal model that we've been using and explore adding both more mechanistic structure and then more statistical structure to the model.
+We then evaluate three models from across this spectrum using pre-generated forecasts.
 
 ## Slides
 
@@ -31,14 +32,13 @@ The source file of this session is located at `sessions/forecasting-models.qmd`.
 
 ## Libraries used
 
-In this session we will use the `nfidd` package to load a data set of infection times and access stan models and helper functions, the `dplyr` and `tidyr` packages for data wrangling, `ggplot2` library for plotting, the `tidybayes` package for extracting results of the inference and the `scoringutils` package for evaluating forecasts.
+In this session we will use the `iddconf2026` package to load a data set of infection times and pre-generated forecasts and to access helper functions, the `dplyr` and `tidyr` packages for data wrangling, the `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
 
 ```{r libraries, message = FALSE}
-library("nfidd")
+library("iddconf2026")
 library("dplyr")
 library("tidyr")
 library("ggplot2")
-library("tidybayes")
 library("scoringutils")
 ```
 
@@ -48,14 +48,11 @@ The best way to interact with the material is via the [Visual Editor](https://do
 
 ## Initialisation
 
-We set a random seed for reproducibility. 
+We set a random seed for reproducibility.
 Setting this ensures that you should get exactly the same results on your computer as we do.
-We also set an option that makes `cmdstanr` show line numbers when printing model code.
-This is not strictly necessary but will help us talk about the models.
 
 ```{r}
 set.seed(123)
-options(cmdstanr_print_line_numbers = TRUE)
 ```
 
 :::
@@ -138,18 +135,14 @@ ggplot(data, aes(x = t, y = Rt)) +
 
 :::
 
-The key assumptions we are making here are: 
+The key assumptions we are making here are:
 
 - The population is constant and we roughly know the size of the population.
 - The reproduction number only changes due to susceptible depletion
 - The number of new cases at each time is proportional to the number of susceptibles in the population.
 
-We've coded this up as a stan model in `stan/mechanistic-r.stan`. See `stan/functions/pop_bounded_renewal.stan` for the function which calculates the reproduction number. Let's load the model:
-
-```{r}
-mech_mod <- nfidd_cmdstan_model("mechanistic-r")
-mech_mod
-```
+We implemented this susceptible-depletion renewal model and fitted it to our simulated outbreak offline.
+We compare its forecasts with the other models later in this session.
 
 ## Adding more statistical structure to the renewal model
 
@@ -162,7 +155,7 @@ A statistical term that can be used to describe a time series with a trend is sa
 More specifically, a _stationary_ time series is defined as one whose statistical properties, such as mean and variance, do not change over time.
 In infectious disease epidemiology, this would only be expected for endemic diseases without external seasonal influence.
 
-The random walk model we used in the [forecasting concepts](forecasting-concepts) session is a special case of a more general class of models called _autoregressive (AR) models_. 
+The random walk model we used in the [forecasting concepts](forecasting-concepts) session is a special case of a more general class of models called _autoregressive (AR) models_.
 AR models are a class of models which predict the next value in a time series as a linear combination of the previous values in the time series.
 The random walk model is specifically a special case of an AR(1) model where the next value in the time series is predicted as the previous value, multiplied by a value between 1 and -1 , plus some noise. This becomes a random walk when the multipled value is 0.
 
@@ -230,158 +223,24 @@ ggplot(data, aes(x = t, y = R)) +
 
 :::
 
-We've coded up a model that uses this differenced AR process as a stan model in `stan/statistical-r.stan`. See `stan/functions/geometic_diff_ar.stan` for the function which calculates the reproduction number. Lets load the model:
+We implemented this differenced AR renewal model and, as with the mechanistic model, fitted it to our simulated outbreak offline.
+We compare its forecasts with the other models below.
 
-```{r}
-stat_mod <- nfidd_cmdstan_model("statistical-r")
-stat_mod
-```
+# Evaluating forecasts from our models
 
+We fitted the random walk, more mechanistic and more statistical models to a range of forecast dates offline so you don't have to wait for the models to fit.
+Each model shares the same renewal-with-delays structure and differs only in how the reproduction number evolves over time.
+We now load these pre-generated forecasts and evaluate them.
 
-# Forecasting with the mechanistic and statistical models
+First we recreate the simulated outbreak so we have the observed onsets to compare against.
 
-We will now use the mechanistic and statistical models to forecast the number of cases in the future using data simulated in the same way as we did in the [forecasting concepts](forecasting-concepts) session. We will first load in the data and filter for a forecast origin date.
-
-```{r, load-simulated-onset}
-gen_time_pmf <- make_gen_time_pmf()
+```{r simulate-onsets}
 ip_pmf <- make_ip_pmf()
 onset_df <- simulate_onsets(
   make_daily_infections(infection_times), ip_pmf
 )
 onset_df
-
-# we'll make a forecast on day non day 41, pretending we haven't seen the later
-# data
-cutoff <- 41
-
-filtered_onset_df <- onset_df |>
-  filter(day <= cutoff)
 ```
-
-We will now fit the more mechanistic model to the data.
-```{r fit_mech_model, results = 'hide', message = FALSE}
-horizon <- 28
-
-data <- list(
-  n = nrow(filtered_onset_df),
-  I0 = 1,
-  obs = filtered_onset_df$onsets,
-  gen_time_max = length(gen_time_pmf),
-  gen_time_pmf = gen_time_pmf,
-  ip_max = length(ip_pmf) - 1,
-  ip_pmf = ip_pmf,
-  h = horizon, # Here we set the number of days to forecast into the future
-  N_prior = c(10000, 2000) # the prior for the population size
-)
-mech_forecast_fit <- nfidd_sample(mech_mod, data = data)
-```
-
-```{r mech-forcast-print}
-mech_forecast_fit
-```
-
-We will now fit the more statistical model to the data.
-
-```{r fit_stat_model, results = 'hide', message = FALSE}
-data <- list(
-  n = nrow(filtered_onset_df),
-  I0 = 1,
-  obs = filtered_onset_df$onsets,
-  gen_time_max = length(gen_time_pmf),
-  gen_time_pmf = gen_time_pmf,
-  ip_max = length(ip_pmf) - 1,
-  ip_pmf = ip_pmf,
-  h = horizon # Here we set the number of days to forecast into the future
-)
-stat_forecast_fit <- nfidd_sample(
-  stat_mod, data = data,
-  # again set the initial values to make fitting more numerically stable
-  init = \() list(init_R = 1, rw_sd = 0.01)
-)
-```
-
-Finally, we can extract the forecasts from the models and plot them.
-
-```{r extract-forecast}
-mech_forecast <- mech_forecast_fit |>
-  gather_draws(forecast[day]) |>
-  ungroup() |>
-  mutate(day = day + cutoff)
-
-stat_forecast <- stat_forecast_fit |>
-  gather_draws(forecast[day]) |>
-  ungroup() |>
-  mutate(day = day + cutoff)
-
-forecast <- bind_rows(
-  mutate(mech_forecast, model = "more mechanistic"),
-  mutate(stat_forecast, model = "more statistical")
-) |>
-  ungroup()
-
-target_onsets <- onset_df |>
-  filter(day > cutoff) |>
-  filter(day <= cutoff + horizon)
-```
-
-
-```{r plot_forecast}
-forecast |>
-  filter(.draw %in% sample(.draw, 100)) |>
-  ggplot(aes(x = day)) +
-  geom_line(
-    alpha = 0.1,
-    aes(y = .value, group = interaction(.draw, model), colour = model)
-  ) +
-  geom_point(data = target_onsets, aes(x = day, y = onsets), color = "black") +
-  guides(colour = guide_legend(override.aes = list(alpha = 1))) +
-  lims(y = c(0, 500))
-```
-
-and on the log scale
-
-```{r plot_log_forecast}
-forecast |>
-  filter(.draw %in% sample(.draw, 100)) |>
-  ggplot(aes(x = day)) +
-  geom_line(
-    alpha = 0.1,
-    aes(y = .value, group = interaction(.draw, model), colour = model)
-  ) +
-  geom_point(data = target_onsets, aes(x = day, y = onsets), color = "black") +
-  scale_y_log10() +
-  guides(colour = guide_legend(override.aes = list(alpha = 1)))
-```
-
-::: {.callout-tip}
-## Take 2 minutes
-What do you notice about the forecasts from the more mechanistic and more statistical models?
-:::
-
-::: {.callout-note collapse="true"}
-## Solution
-- The more mechanistic model captures the trend in the data very well.
-- The more statistical model produces some very large forecasts but also has significant probability mass on a a more rapid reduction that ultimately observed.
-- Neither model simply extend the trend in the way the random walk model did in the [forecasting concepts session](forecasting-concepts).
-:::
-
-::: {.callout-note .optional collapse="true"}
-As these models are still renewal processes we can still plot the time-varying reproduction number which can be a helpful way of reasoning about how the models are performing.
-
-```{r plot-stat-rt}
-stat_forecast_fit |>
-  gather_draws(R[day]) |>
-  ungroup() |>
-  filter(.draw %in% sample(.draw, 100)) |>
-  ggplot(aes(y = .value, x = day)) +
-  geom_hline(yintercept = 1, linetype = "dashed") +
-  geom_line(aes(group = .draw), alpha = 0.1)
-```
-:::
-
-# Evaluating forecasts from our models
-
-As in the [forecast evaluation session](forecast-evaluation), we have fit these models to a range of forecast dates so you don't have to wait for the models to fit. We will now evaluate the forecasts from the mechanistic and statistical models.
 
 ```{r load_forecasts}
 data(rw_forecasts, stat_forecasts, mech_forecasts)
@@ -394,7 +253,7 @@ forecasts <- bind_rows(
 
 ::: {.callout-tip .optional}
 ## How did we estimate these forecasts?
-We generated these forecasts using the code in `data-raw/generate-example-forecasts.r` which uses the same approach we just took for a single forecast date but generalises it to many forecast dates.
+We generated these forecasts using the code in `data-raw/generate-example-forecasts.r` which fits each of the three models to many forecast dates.
 
 Some important things to note about these forecasts:
 
@@ -542,7 +401,7 @@ sc_scores |>
 ```
 
 ::: {.callout-tip}
-## Take 5 minutes 
+## Take 5 minutes
 How do the CRPS values change based on forecast date?
 How do the CRPS values change with forecast horizon?
 :::
@@ -567,8 +426,8 @@ How do the CRPS values change with forecast date?
 
 ::: {.callout-tip}
 ## Reminder: Interpreting the PIT histogram
-- Ideally PIT histograms should be uniform. 
-- If is a U shape then the model is overconfident and if it is an inverted U shape then the model is underconfident. 
+- Ideally PIT histograms should be uniform.
+- If is a U shape then the model is overconfident and if it is an inverted U shape then the model is underconfident.
 - If it is skewed then the model is biased towards the direction of the skew.
 :::
 
@@ -679,7 +538,7 @@ log_sc_scores |>
 ```
 
 ::: {.callout-tip}
-## Take 5 minutes 
+## Take 5 minutes
 How do the CRPS values on the log scale compare to the scores on the original scale?
 :::
 
@@ -692,48 +551,6 @@ How do the CRPS values on the log scale compare to the scores on the original sc
 
 # Going further
 
-## What happens when you are very wrong about the population size?
-
-In the forecasts above we assumed that we knew the population size roughly. In practice, we may not. Refit the more mechanistic model with different priors for the population size and see how the forecasts change.
-
-::: {.callout-note collapse="true"}
-## Solution
-
-```{r very-wrong, results = 'hide', message = FALSE}
-data <- list(
-  n = nrow(filtered_onset_df),
-  I0 = 1,
-  obs = filtered_onset_df$onsets,
-  gen_time_max = length(gen_time_pmf),
-  gen_time_pmf = gen_time_pmf,
-  ip_max = length(ip_pmf) - 1,
-  ip_pmf = ip_pmf,
-  h = horizon, # Here we set the number of days to forecast into the future
-  N_prior = c(100, 20) # the prior for the population size
-)
-
-mech_forecast_fit_diff <- nfidd_sample(
-  mech_mod, data = data
-)
-
-mech_forecast_diff <- mech_forecast_fit_diff |>
-  gather_draws(forecast[day]) |>
-  ungroup() |>
-  mutate(day = day + cutoff)
-```
-
-```{r very-wrong-plot}
-mech_forecast_diff |>
-  filter(.draw %in% sample(.draw, 100)) |>
-  ggplot(aes(y = .value, x = day)) +
-  geom_line(alpha = 0.1, aes(group = .draw)) +
-  geom_point(
-    data = target_onsets, aes(x = day, y = onsets),
-    color = "black"
-  )
-```
-:::
-
 ## Challenge
 
 - We have only looked at three forecasting models here. There are many more models that could be used. For example, we could use a more complex mechanistic model which captures more of the underlying dynamics of the data generating process. We could also use a more complex statistical model which captures more of the underlying structure of the data.
@@ -744,7 +561,7 @@ mech_forecast_diff |>
 ## Methods in practice
 
 - The statistical models we've discussed here represent just a subset of available forecasting approaches.
-For a comprehensive treatment of time series forecasting models, including ARIMA models as a generalisation of autoregressive approaches with additional features for differencing and moving averages, see @hyndmanForecastingPrinciplesPractice2021. 
+For a treatment of time series forecasting models, including ARIMA models as a generalisation of autoregressive approaches with additional features for differencing and moving averages, see @hyndmanForecastingPrinciplesPractice2021.
 These models offer a different workflow for thinking about forecasting.
 Whilst Bayesian approaches work forward from domain knowledge to specify data-generating processes, traditional time series methods work backward from observed patterns using standard toolkits (transformations, differencing, residual analysis) to achieve stationarity and improve predictions.
 Both approaches ultimately aim to capture the same underlying data-generating process but from different perspectives. Something to think about!

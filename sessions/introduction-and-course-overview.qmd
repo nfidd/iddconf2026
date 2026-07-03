@@ -5,17 +5,21 @@ order: 0
 
 [From an epidemiological line list to informing decisions in real-time](slides/from-line-list-to-decisions)
 
-### Aim of the course
+### Aim of the workshop
 
-In this course we will address how can we use data typically collected in an outbreak, or in routine surveillance, to answer questions like
+Data collected in an outbreak, or in routine surveillance, is used to answer questions like
 
 -   What is the number of cases now (*nowcasting*)
--   Are infections rising/falling and by how much (*$R_t$ estimation*)
+-   Are infections rising or falling and by how much (*$R_t$ estimation*)
 -   What does this mean for the near future (*forecasting*)
 
-To answer these questions, we need to understand the epidemiological processes that create the kinds of data that we typically have available for outbreak analysis and infectious disease surveillance.
+This workshop focuses on the last of these, and on a question that matters just as much once a forecast has been made.
 
-There are particular challenges when trying to do these analyses *in real time* (i.e. whilst transmission and data collection is ongoing) rather than retrospectively, which we will address in turn.
+-   What is a forecast, and how do we visualise and interpret one?
+-   Is the forecast any good (*evaluation*)?
+-   How do we combine forecasts from several models (*ensembles*)?
+
+To make sense of forecasts we need to understand the epidemiological processes that create the data we typically have available, and the challenges of doing this analysis *in real time* rather than retrospectively.
 
 ::: callout
 Let's look at infectious disease surveillance data from the perspective of an individual infection.
@@ -28,48 +32,35 @@ There are two types of processes happening:
 Both of these processes involve time delays which makes analysing data in real time especially tricky.
 :::
 
-In this course, we first focus on making sense of the delays and biases in the data we are able to access in real time as part of infectious disease surveillance.
-We'll combine this with the process of infectious disease transmission, with the reproduction number as a key component.
-With that, we can start to interpret the present (nowcasting) and predict the future (forecasting).
+A forecast is a probabilistic statement about what this data will do next.
+Making one is only half the job.
+Much of this workshop is about the other half, telling whether a forecast is any good by confronting it with what actually happened, and using that to compare and combine models.
 
-### Why this course?
+### Why this workshop?
 
--   These are common questions in outbreak response and disease surveillance
--   Accounting for underlying processes can get surprisingly complicated quickly ^[Time travel is [messy stuff](https://youtu.be/q2nNzNo_Xps)], and it's easy to make mistakes
--   There's currently (at the time of devising this course) no comprehensive training resource that links these common questions and challenges
+-   Forecasts are common in outbreak response and disease surveillance, and increasingly feed into decisions
+-   It is easy to produce a forecast and much harder to know whether it is any good
+-   Combining forecasts across models often improves predictions, but only if we can measure that improvement
 
 ### Approach
 
-Throughout the course we will
+Each session in the workshop
 
-1.  use models to simulate data sets in **R** (thus introducing the *generative model*)
-2.  apply the generative model to the simulated data in the probabilistic programming language **stan**, to
-    -   learn about the system (conduct inference)
-    -   **make predictions** (nowcasting/forecasting)
+-   builds on the previous one so that by the end you have a route from making a forecast to evaluating it and combining it with others;
+-   starts with a short introductory talk;
+-   mainly consists of interactive content that you work through in **R**;
+-   marks optional and additional material clearly (boxes labelled *optional*, plus a "Going further" section at the end of each session).
 
-Each session in the course:
+We work throughout from forecasts we made earlier, so you can focus on interpreting, evaluating and combining them without waiting for models to fit.
 
-- builds on the previous one so that participants will have an overview of the real-time analysis workflow by the end of the course;
-- starts with a short introductory talk;
-- mainly consists of interactive content that participants will work through;
-- marks optional and additional material clearly (boxes labelled *optional*, plus a "Going further" section at the end of each session). Skip these on a first pass and come back to them later or after the course; the main material comes first;
+For those attending in person the workshop also has multiple instructors ready to answer questions, pauses at several points to discuss observations together, and ends with a wrap-up and discussion.
 
-For those attending the in-person version the course also:
+### What we cover
 
-- has multiple instructors ready to answer questions about this content; if several people have a similar question we may pause the session and discuss it with the group;
-- pauses at several points during each session to discuss observations and learnings together and address any questions;
-- ends with a wrap-up and discussion where we review the sessions material.
-
-### Timeline for the course
-
-The course was created to be taught in-person for 2.5 days but of course if you are studying this on your own using the web site you can go through the material at your own pace and in your own time.
-Broadly, the intended timeline is:
-
--   delay distributions and how to estimate them (day 1)
--   $R_t$ estimation and the generation interval (day 1)
--   nowcasting (day 2)
--   forecasting and evaluation (day 2)
--   ensemble methods and applications (day 3)
+-   forecasting concepts and visualisation
+-   the spectrum of forecasting models
+-   forecast evaluation
+-   forecast ensembles
 
 Let's get started!
 
@@ -79,6 +70,4 @@ Let's get started!
 
 -   If you haven't already, start with [getting set up for the course](../getting-started)
 
--   Once you're all set up, we begin with [delay distributions](delay-distributions).
-
--   For the probability distributions and Bayesian inference with stan that we rely on throughout the course, work through the [Stan reference guide](../reference/stan) as self-study (also shared on Slack); it is not taught as a separate session.
+-   Once you're all set up, we begin with [forecasting concepts](forecasting-concepts).

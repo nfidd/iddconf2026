@@ -1,0 +1,26 @@
+---
+title: "Timetable"
+comments: false
+toc: false
+---
+
+**What is a forecast, and is it any good?**
+A half-day workshop at [IDDconf 2026](https://iddconf.com), on the morning of Tuesday 7 July 2026 (09:00–12:30).
+Instructors: Kath Sherratt and Sam Abbott (LSHTM).
+
+The workshop is a short, forecasting-focused selection from the fuller course on [Nowcasting and forecasting infectious disease dynamics](https://nfidd.github.io/nfidd/).
+
+::: {.column-page .timetable}
+| Time | Session / activity | Content |
+|---|---|---|
+| 09:00–09:15 | Session 0 · Introduction & overview | [Slides](sessions/slides/introduction-to-the-course-and-the-instructors), [Getting started](getting-started) |
+| 09:15–10:05 | Session 1 · Forecasting concepts & visualisation | [Slides](sessions/slides/introduction-to-forecasting), [Practice](sessions/forecasting-concepts) |
+| 10:05–10:45 | Session 2 · Forecast evaluation — is it any good? | [Slides](sessions/slides/forecast-evaluation), [Practice](sessions/forecast-evaluation) |
+| 10:45–11:05 | *Coffee break* | |
+| 11:05–11:45 | Session 3 · Forecasting models | [Slides](sessions/slides/introduction-to-the-spectrum-of-forecasting-models), [Practice](sessions/forecasting-models) |
+| 11:45–12:25 | Session 4 · Forecast ensembles | [Slides](sessions/slides/introduction-to-ensembles), [Practice](sessions/forecast-ensembles) |
+| 12:25–12:30 | Session 5 · Summary & discussion | [Summary](sessions/slides/closing), [Further reading](sessions/end-of-course-summary-and-discussion) |
+:::
+
+The times above are a guide.
+Each practice session is self-contained, so you are welcome to keep working through the material during the break, or to go deeper into any session that interests you.

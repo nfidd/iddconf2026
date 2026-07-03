@@ -1,6 +1,6 @@
 ---
 title: "From an epidemiological line list to informing decisions in real-time"
-author: "Nowcasting and forecasting of infectious disease dynamics"
+author: "What is a forecast, and is it any good?"
 engine: knitr
 format:
   revealjs:
@@ -49,7 +49,7 @@ Throughout the course we will
    
 ```{r outbreak-plot, fig.width=5, fig.height=3, fig.align='center'}
 library(ggplot2)
-library(nfidd)
+library(iddconf2026)
 ### visualise the infection curve
 data(infection_times)
 ggplot(infection_times, aes(x = infection_time)) +
