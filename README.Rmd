@@ -2,15 +2,20 @@
 output: github_document
 ---
 
-# Nowcasting and forecasting infectious disease dynamics
+# What is a forecast, and is it any good?
 
-This repository contains the material to create the nfidd course page.
+Material for the [IDDconf 2026](https://iddconf.com) workshop on visualising,
+evaluating and combining infectious disease forecasts, run on the morning of
+Tuesday 7 July 2026 by Kath Sherratt and Sam Abbott (LSHTM).
 
-All the raw material is in the folder `sessions/` and is written in
-`quarto`. Any changes to the quarto files are automatically
-updated on the web site once committed to the `main` branch.
+This is a short, forecasting-focused selection from the fuller course on
+[Nowcasting and forecasting infectious disease dynamics](https://nfidd.github.io/nfidd/).
+See the [workshop website](https://nfidd.github.io/iddconf2026/) for the
+timetable, setup instructions, and sessions.
 
-To add a lesson, add a `.qmd` file in the `sessions` folder with a YAML field `order:` corresponding to where it fits in, and edit `sessions.qmd` to add it to the schedule.
+All the raw material is in the folder `sessions/` and is written in `quarto`.
+Any changes to the quarto files are automatically updated on the web site once
+committed to the `main` branch.
 
 ## Local testing
 
@@ -65,6 +70,11 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## License
+
+All materials are provided under the permissive
+[MIT License](https://github.com/nfidd/iddconf2026/blob/main/LICENSE).
 
 
 
