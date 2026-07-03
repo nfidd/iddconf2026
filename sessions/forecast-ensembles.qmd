@@ -364,10 +364,12 @@ We will look at two common weighting methods:
 ::: {.callout-tip}
 ##### Your turn: work in pairs (10--12 minutes)
 
-Split the two methods between you.
+Run both weighting methods below (each needs the other later, so run them both), then pair up and take one method each to make sense of.
 
-- **Partner A**: build the **inverse WIS** ensemble (next code block).
-- **Partner B**: build the **linear opinion pool** ensemble (the block after).
+- **Partner A**: follow the **inverse WIS** weighting and be ready to explain how its weights are set.
+- **Partner B**: follow the **linear opinion pool** and be ready to explain how its weights are set.
+
+Then compare at the weights plot and score tables that follow: do your two methods agree on which models matter, and does either clearly beat the simple mean ensemble?
 :::
 
 #### Inverse WIS weighting
@@ -430,11 +432,17 @@ This is done from samples, with weights tuned to optimise the CRPS.
 The procedure is also called a linear opinion pool.
 We use the `lopensemble` package.
 
+Fitting the mixture weights optimises for every forecast date, which is slow with 1000 samples.
+For demonstration here, we'll thin to 200 samples per forecast: this is about four times faster and gives essentially the same weights.
+
 ```{r}
 #| label: mixture
 
 ## lopensemble expects a "date" column indicating the timing of forecasts
+## thin to 200 samples per forecast to speed up weight estimation
 lop_forecasts <- sample_forecasts |>
+  as_tibble() |>
+  filter(sample_id <= 200) |>
   rename(date = day)
 
 lop_by_forecast <- function(
