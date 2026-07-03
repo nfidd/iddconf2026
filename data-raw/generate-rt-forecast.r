@@ -1,6 +1,11 @@
 library("iddconf2026")
 library("dplyr")
 library("tidybayes")
+library("cmdstanr")
+
+# Stan tooling lives in data-raw (not the installed package) as the sessions
+# never fit Stan. Source it to (re)generate the forecast datasets.
+source("data-raw/stan-tools.r")
 
 # Generate the reproduction number forecast/estimate data used in the
 # "Visualising the forecast of the reproduction number" section of the

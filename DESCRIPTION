@@ -19,7 +19,6 @@ BugReports: https://github.com/nfidd/iddconf2026/issues
 Depends:
     R (>= 4.2.0)
 Imports:
-    cmdstanr,
     dplyr,
     tidyr,
     tidybayes

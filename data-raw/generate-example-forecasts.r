@@ -4,7 +4,11 @@ library("cmdstanr")
 library("tidybayes")
 library("purrr")
 library("usethis")
-library("nfidd")
+library("iddconf2026")
+
+# Stan tooling lives in data-raw (not the installed package) as the sessions
+# never fit Stan. Source it to (re)generate the forecast datasets.
+source("data-raw/stan-tools.r")
 
 set.seed(12345)
 
