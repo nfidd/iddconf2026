@@ -3,6 +3,7 @@ library("dplyr")
 library("tidybayes")
 library("cmdstanr")
 
+# See data-raw/README.md for prerequisites and the regeneration order.
 # Stan tooling lives in data-raw (not the installed package) as the sessions
 # never fit Stan. Source it to (re)generate the forecast datasets.
 source("data-raw/stan-tools.r")
