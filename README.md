@@ -1,18 +1,15 @@
 
-# What is a forecast, and is it any good?
+# Nowcasting and forecasting infectious disease dynamics
 
-Material for the [IDDconf 2026](https://iddconf.com) workshop on visualising,
-evaluating and combining infectious disease forecasts, run on the morning of
-Tuesday 7 July 2026 by Kath Sherratt and Sam Abbott (LSHTM).
+This repository contains the material to create the nfidd course page.
 
-This is a short, forecasting-focused selection from the fuller course on
-[Nowcasting and forecasting infectious disease dynamics](https://nfidd.github.io/nfidd/).
-See the [workshop website](https://nfidd.github.io/iddconf2026/) for the
-timetable, setup instructions, and sessions.
+All the raw material is in the folder `sessions/` and is written in
+`quarto`. Any changes to the quarto files are automatically updated on
+the web site once committed to the `main` branch.
 
-All the raw material is in the folder `sessions/` and is written in `quarto`.
-Any changes to the quarto files are automatically updated on the web site once
-committed to the `main` branch.
+To add a lesson, add a `.qmd` file in the `sessions` folder with a YAML
+field `order:` corresponding to where it fits in, and edit
+`sessions.qmd` to add it to the schedule.
 
 ## Local testing
 
@@ -22,7 +19,23 @@ The `html` pages can be generated locally using the function
 quarto::quarto_render()
 ```
 
-## License
+## Contributors
 
-All materials are provided under the permissive
-[MIT License](https://github.com/nfidd/iddconf2026/blob/main/LICENSE).
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- prettier-ignore-start -->
+
+<!-- markdownlint-disable -->
+
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors` package](https://github.com/ropensci/allcontributors)
+following the [allcontributors](https://allcontributors.org)
+specification. Contributions of any kind are welcome!
+
+<a href="https://github.com/nfidd/iddconf2026/commits?author=seabbs">seabbs</a>
+
+<!-- markdownlint-enable -->
+
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
