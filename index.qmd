@@ -20,7 +20,7 @@ about:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-A half-day workshop for [IDDconf 2026](https://iddconf.com), run on the morning of Tuesday 7 July 2026 by Kath Sherratt and Sam Abbott (LSHTM).
+A half-day workshop for [IDDconf 2026](https://iddconf.com), run on the morning of Tuesday 7 July 2026 by Kath Sherratt and Sam Abbott.
 
 We explore how to visualise and interpret infectious disease forecasts, evaluate forecast performance and identify limitations, and combine multiple forecasts into ensembles.
 We introduce each concept and then work through examples implemented in R.
