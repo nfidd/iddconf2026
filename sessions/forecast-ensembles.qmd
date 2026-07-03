@@ -599,18 +599,16 @@ In all methods, there is a trade-off in how much to optimise for past performanc
 This also involves deciding on the period of past performance that's relevant (e.g. all time, or only recent).
 :::
 
-## What's good enough?
+## Quantity, quality, and the combination puzzle
 
-Ensembles do tend to beat their component models in predictive accuracy, and a stubborn result is the "forecast combination puzzle": a simple, equally weighted average is very hard to beat with more sophisticated weighting [@amaralPostprocessingWeightedCombination2025].
+Ensembles do tend to beat their component models in predictive accuracy, but a stubborn result is the "forecast combination puzzle".
+A simple, equally weighted average is very hard to beat with more sophisticated weighting [@amaralPostprocessingWeightedCombination2025].
 This is because weights have to be estimated, and that estimation is itself uncertain, especially with few past forecasts.
 A good working prior is that equal weights are hard to beat.
 
 What does seem to make a difference is adding additional models to the ensemble, which adds variance.
-
-If the aim is to maximise variance, the benefit depends on how *independent* the models really are.
-However, after a point this comes with **diminishing returns**.
-Two models that share assumptions add less than two different but plausible views [@fox2024].
-From this perspective, it's worth considering model diversity as a kind of genealogical tree.
+Yet after a point this comes with diminishing returns, because this benefit depends on how independent the models really are.
+Two models that share assumptions will add less useful information than two different but plausible views [@fox2024].
 
 ::: {.callout-note .optional collapse="true"}
 ## Combining models from different modellers
@@ -619,51 +617,58 @@ Throughout the course we have carefully built models from an understanding of th
 Combining these might make sense when we have a clear idea of where variation comes from.
 However, when we present work to policy, we often create ensembles combine models from different teams, with different and often unstated assumptions about that process.
 
-- What does "independence" mean when models share data and ideas?
-- How does that change the reliability of the ensemble, and how you would communicate it?
-- What would you want to know about an ensemble before trusting whether it's good enough for decision use?
+- Where does "independence" matter in the modelling process?
 :::
 
-## The politics of ensembles
+## What are ensembles good for?
 
 Ensembles are increasingly how modelling reaches policy.
-There are two quite different philosophies about what an ensemble is *for*.
+At the same time, there are two different approaches to what an ensemble is good *for*.
 
-**A product: gaining predictive accuracy with forecasting hubs.** Projects such as the [European Respicast Hub](https://respicast.ecdc.europa.eu/) or the US Flu Forecast Hub collect forecasts in a standard format and combine them into a single, validated, comparable product.
-The value is the *product*: an ensemble forecast that can be scored, visualised, and handed to a decision-maker.
+**A product:** The benefits of gaining predictive accuracy are the focus of large, open, collaborative projects such as the US Flu Forecast Hub or the [European Respicast Hub](https://respicast.ecdc.europa.eu/), which collect forecasts in a standard format and combine them into a single ensemble.
+This typically involves:
 
-**A process: expert collaboration and consensus.** This approach views collaborative modelling as a *process* of model comparison, identifying differences, and reaching consensus.
-The deliberation, challenge, and shared ownership of a result are the benefit, at the cost of the additional time this takes.
-For example, in the UK during COVID-19 , the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers[@medley2022].
+- Creating a standardised, open platform for anyone to contribute
+- Collating all models' output based on minimal validation checks
+- Combining in an ensemble, which becomes the focus of public communication
+
+Typically, there is relatively little opportunity for interaction between modellers, and while each model may be visualised, the resulting ensemble is the focus output.
+The implicit value is the *product*: an ensemble forecast that can be scored, visualised, and viewed by anyone.
+
+**A process:** An alternative view is to focus on the collaborative process of creating an ensemble from multiple modellers.
+For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers[@medley2022].
+
+This approach typically involves
+
+- Targeted recruitment among known modellers
+- Scheduled opportunities for interaction, including model comparison, identifying differences, and reaching consensus
+- An ensemble with shared ownership of the result.
 
 ::: {.callout-tip}
-##### Discuss (think, pair, share)
+##### Take 2 minutes
 
-Two styles: **ensemble-as-output** (hubs) and **ensemble-as-process** (consensus).
+Consider the process or product approach to collaborative modelling.
 
-- What are the benefits and the costs of each?
-- Which would you want producing the forecast that goes to a minister?
-  Which would you want to *build*, as a modeller?
-- When does the process matter as much as the product?
+- What might each approach imply for the ensemble weighting schemes we've considered so far?
 :::
 
-## Is it any good? A bigger question than the score
+::: {.callout-tip}
+##### Group discussion: product and process
 
-We have used proper scoring rules with the "forecasting paradigm": sharpness subject to calibration.
-proper scoring rules, calibration, and coverage.
-Those tools are essential, and you should trust them.
+Consider the process or product approach to collaborative modelling.
+Discuss in pairs, each taking the stance of a forecast producer or a forecast user.
 
-But the ensemble makes the limits of a single score obvious.
-A weighted ensemble can win on WIS and still be *worse* to use: harder to explain, harder to trust, slower to produce, more brittle when a model drops out.
-A consensus that scores slightly worse may be far more *useful*, because a room of experts stands behind it, understands it, and can communicate it under pressure.
+- What are some of the benefits and the costs of each approach, focusing on the process or the product of collaborative modelling?
+:::
 
-So the honest answer to "is more modelling worth it?"
-is a **value of information** question.
-Every extra model has a cost, in time, in complexity, in coordination, and a *marginal* value in better decisions.
-The next model is worth adding only when its marginal value beats its cost, and that depends on the independence of the models, the phase of the epidemic, the forecast horizon, and, above all, what the forecast is *for*.
+## What's good enough?
 
-A forecast that is good is one that is not only sharp and calibrated, but also **trusted, understood, and usable** by the people who act on it.
-That is the question this whole workshop has been circling: what is a forecast, and is it any good?
+In this workshop, we have emphasised proper scoring rules with the "forecasting paradigm": sharpness subject to calibration.
+An ensemble makes the limits of using a single score obvious.
+
+An ensemble might be the most performant, but still worse to use: harder to explain, slower to produce, entirely dependent on the consistency and quality of the component models.
+On the other hand, an ensemble might be the most useful: a reasonably reliable product that gives greater opportunity for modeller-policy interaction.
+This points towards a wider question that we haven't touched the sides of here: a good forecast may be not only sharp and calibrated, but also trusted, understood, and relevant to the decision at hand.
 
 # Wrap up
 
