@@ -13,7 +13,7 @@ We will build ensembles from the models we met earlier before returning to the q
 
 ## Slides
 
-- [Multi-model ensembles](slides/introduction-to-ensembles)
+- [Introduction to ensembles](slides/introduction-to-ensembles)
 
 ## Objectives
 
