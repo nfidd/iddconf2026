@@ -33,7 +33,7 @@ The source file of this session is located at `sessions/forecast-ensembles.qmd`.
 ## Libraries used
 
 In this session we will use the `iddconf2026` package to load a data set of infection times and forecasts, the `dplyr` and `tidyr` packages for data wrangling, the `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
-We will also use `qrensemble` for quantile regression averaging and `lopensemble` for mixture ensembles (also called linear opinion pool).
+We will also use `lopensemble` for mixture ensembles (also called linear opinion pool).
 
 ```{r}
 #| label: libraries
@@ -44,7 +44,6 @@ library("dplyr")
 library("tidyr")
 library("ggplot2")
 library("scoringutils")
-library("qrensemble")
 library("lopensemble")
 ```
 
