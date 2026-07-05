@@ -9,7 +9,9 @@ bibliography: ../nfidd.bib
 As we saw in the [forecasting models](forecasting-models) session, different modelling approaches have different strengths and weaknesses, and we do not usually know in advance which one will produce the best forecast in any given situation.
 One way to draw strength from a diversity of approaches is to combine forecasts from different models into a forecast ensemble.
 
-We will build ensembles from the models we met earlier before returning to the question: **is it any good?**, but this time considering what / for whom an ensemble might be good for.
+In this session, we'll start with forecasts from the models we explored in the [forecasting models](forecasting-models) session and build ensembles of these models.
+We will then compare the performance of these ensembles to the individual models and to each other.
+Last, we'll return to the question *is it any good?*, considering how an ensemble might be good for different users and use-cases.
 
 ## Slides
 
