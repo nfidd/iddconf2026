@@ -37,10 +37,7 @@ The source file of this session is located at `sessions/forecast-ensembles.qmd`.
 In this session we will use the `iddconf2026` package to load a data set of infection times and forecasts, the `dplyr` and `tidyr` packages for data wrangling, the `ggplot2` library for plotting and the `scoringutils` package for evaluating forecasts.
 We will also use `lopensemble` for mixture ensembles (also called linear opinion pool).
 
-```{r}
-#| label: libraries
-#| message: false
-
+```{r libraries, message = FALSE}
 library("iddconf2026")
 library("dplyr")
 library("tidyr")
@@ -90,9 +87,7 @@ They share the same renewal-with-delays structure but use different models for t
 The precise details of the models are not critical to what we are doing here.
 As in the session on [forecast evaluation](forecast-evaluation), we fitted these models to a range of forecast dates so you don't have to wait for them to fit.
 
-```{r}
-#| label: load_forecasts
-
+```{r load_forecasts}
 data(rw_forecasts, stat_forecasts, mech_forecasts)
 forecasts <- bind_rows(
   rw_forecasts,
@@ -144,9 +139,7 @@ We do this by focusing on the *marginal distribution* at each time point: we tre
 The `{scoringutils}` package makes this easy.
 First we declare the forecasts as `sample` forecasts.
 
-```{r}
-#| label: convert-for-scoringutils
-
+```{r convert-for-scoringutils}
 sample_forecasts <- forecasts |>
   left_join(onset_df, by = "day") |>
   filter(!is.na(.value)) |>
@@ -161,9 +154,7 @@ sample_forecasts
 
 Then we convert to `quantile` forecasts.
 
-```{r}
-#| label: convert-to-quantile
-
+```{r convert-to-quantile}
 quantile_forecasts <- sample_forecasts |>
   as_forecast_quantile()
 quantile_forecasts
@@ -193,9 +184,7 @@ Calculating quantiles of a new distribution as an average of the quantiles of it
 
 We calculate the mean quantile ensemble by taking the mean of the forecasts at each quantile level.
 
-```{r}
-#| label: mean-ensemble
-
+```{r mean-ensemble}
 mean_ensemble <- quantile_forecasts |>
   as_tibble() |>
   summarise(
@@ -208,9 +197,7 @@ mean_ensemble <- quantile_forecasts |>
 
 Similarly, the median ensemble takes the median at each quantile level.
 
-```{r}
-#| label: median-ensemble
-
+```{r median-ensemble}
 median_ensemble <- quantile_forecasts |>
   as_tibble() |>
   summarise(
@@ -223,9 +210,7 @@ median_ensemble <- quantile_forecasts |>
 
 We combine the ensembles with the individual forecasts to make visualisation easier.
 
-```{r}
-#| label: combine-ensembles
-
+```{r combine-ensembles}
 simple_ensembles <- bind_rows(
   mean_ensemble,
   median_ensemble,
@@ -238,9 +223,7 @@ simple_ensembles <- bind_rows(
 How do these ensembles differ from the individual models?
 We start by plotting a single forecast from each.
 
-```{r}
-#| label: plot-single-forecasts
-
+```{r plot-single-forecasts}
 plot_ensembles <- function(data, obs_data) {
   data |>
     pivot_wider(names_from = quantile_level, values_from = predicted) |>
@@ -277,18 +260,14 @@ plot_single_forecasts
 
 The log scale gives another perspective.
 
-```{r}
-#| label: plot-single-forecasts-log
-
+```{r plot-single-forecasts-log}
 plot_single_forecasts +
   scale_y_log10()
 ```
 
 Now the full range of forecasts from each model and ensemble.
 
-```{r}
-#| label: plot-multiple-forecasts
-
+```{r plot-multiple-forecasts}
 plot_multiple_forecasts <- simple_ensembles |>
   plot_ensembles(onset_df |> filter(day >= 21)) +
   lims(y = c(0, 400))
@@ -303,9 +282,7 @@ The mean ensemble has slightly tighter uncertainty than the median ensemble, and
 
 As in the [forecast evaluation session](forecast-evaluation), we score the ensembles with the `{scoringutils}` `score()` function.
 
-```{r}
-#| label: score-ensembles
-
+```{r score-ensembles}
 ensemble_scores <- simple_ensembles |>
   as_forecast_quantile(forecast_unit = c("origin_day", "horizon", "model")) |>
   score()
@@ -320,9 +297,7 @@ We use it here because we are scoring quantiles, not samples, so we cannot use t
 
 A high-level overview of the scores by model:
 
-```{r}
-#| label: score-overview
-
+```{r score-overview}
 ensemble_scores |>
   summarise_scores(by = c("model"))
 ```
@@ -378,9 +353,7 @@ Then compare at the weights plot and score tables that follow: do the two weight
 We first need the WIS for each model, which we already have.
 We weight by the inverse WIS over the period before each forecast, so we only use information available at the time.
 
-```{r}
-#| label: calc-wis
-
+```{r calc-wis}
 model_scores <- quantile_forecasts |>
   score()
 cumulative_scores <- list()
@@ -406,9 +379,7 @@ weights_per_model |>
 
 We apply the weights, using weights from two weeks before each forecast date to inform each ensemble.
 
-```{r}
-#| label: apply-weights
-
+```{r apply-weights}
 inverse_wis_ensemble <- quantile_forecasts |>
   as_tibble() |>
   left_join(
@@ -436,9 +407,7 @@ We use the `lopensemble` package.
 Fitting the mixture weights optimises for every forecast date, which is slow with 1000 samples.
 For demonstration here, we'll thin to 200 samples per forecast: this is about four times faster and gives essentially the same weights.
 
-```{r}
-#| label: mixture
-
+```{r mixture}
 ## lopensemble expects a "date" column indicating the timing of forecasts
 ## thin to 200 samples per forecast to speed up weight estimation
 lop_forecasts <- sample_forecasts |>
@@ -494,9 +463,7 @@ lop_ensembles <- lop_ensembles_obj |>
 
 We collect the weighted ensembles alongside the simple ensembles.
 
-```{r}
-#| label: combine-weighted-ensembles
-
+```{r combine-weighted-ensembles}
 weighted_ensembles <- bind_rows(
   inverse_wis_ensemble,
   lop_ensembles,
@@ -508,9 +475,7 @@ weighted_ensembles <- bind_rows(
 
 A range of forecasts from each model and ensemble:
 
-```{r}
-#| label: plot-multiple-weighted-forecasts
-
+```{r plot-multiple-weighted-forecasts}
 plot_multiple_weighted_forecasts <- weighted_ensembles |>
   plot_ensembles(onset_df |> filter(day >= 21)) +
   lims(y = c(0, 400))
@@ -521,9 +486,7 @@ plot_multiple_weighted_forecasts
 
 We can compare the weights each method assigns to each model over time.
 
-```{r}
-#| label: plot-model-weights
-
+```{r plot-model-weights}
 weights <- rbind(
   weights_per_model |> mutate(method = "Inverse WIS"),
   lop_weights |> mutate(method = "LOP")
@@ -563,6 +526,7 @@ Finally we score the weighted ensembles.evaluate accuracy We drop the first two 
 ```{r}
 #| label: score-weighted-ensembles
 
+```{r score-weighted-ensembles}
 weighted_ensemble_scores <- weighted_ensembles |>
   filter(origin_day >= 29) |>
   as_forecast_quantile(forecast_unit = c("origin_day", "horizon", "model")) |>
@@ -574,9 +538,7 @@ weighted_ensemble_scores |>
 
 Remembering the [forecast evaluation session](forecast-evaluation), we should also check performance on the log scale.
 
-```{r}
-#| label: score-overview-weighted-log
-
+```{r score-overview-weighted-log}
 log_ensemble_scores <- weighted_ensembles |>
   filter(origin_day >= 29) |>
   as_forecast_quantile(forecast_unit = c("origin_day", "horizon", "model")) |>
