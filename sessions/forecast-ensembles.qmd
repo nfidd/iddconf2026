@@ -22,7 +22,7 @@ Last, we'll return to the question *is it any good?*, considering how an ensembl
 By the end of this session you will be able to:
 
 1. **construct** a simple unweighted and weighted ensemble using R;
-2. **compare** ensemble scores to their component models and explain why weighting rarely wins;
+2. **compare** ensemble scores to their component models and evaluate using quantile-based scores;
 3. **interpret** the politics of collaborative modelling and assess the costs and benefits of different forecasting models
 
 ::: {.callout-note collapse="true"}
@@ -186,7 +186,7 @@ The mean is preferred when we want models that diverge from the middle to still 
 ::: {.callout-note .optional collapse="true"}
 #### Vincent average
 
-Calculating quantiles of a new distribution as an average of the quantiles of its constituents is called a *Vincent average*, after the biologist Stella Vincent, who described it as early as 1912 when studying the role of whiskers in the behaviour of white rats.
+Calculating quantiles of a new distribution as an average of the quantiles of its constituents is called a *Vincent average*, after the biologist Stella Vincent, who described it in 1912 when studying the role of whiskers in the behaviour of white rats.
 :::
 
 #### Construction
@@ -201,7 +201,7 @@ mean_ensemble <- quantile_forecasts |>
   summarise(
     predicted = mean(predicted),
     observed = unique(observed),
-    model = "Mean ensemble",
+    model = "Ensemble (mean)",
     .by = c(origin_day, horizon, quantile_level, day)
   )
 ```
@@ -216,7 +216,7 @@ median_ensemble <- quantile_forecasts |>
   summarise(
     predicted = median(predicted),
     observed = unique(observed),
-    model = "Median ensemble",
+    model = "Ensemble (median)",
     .by = c(origin_day, horizon, quantile_level, day)
   )
 ```
@@ -284,7 +284,7 @@ plot_single_forecasts +
   scale_y_log10()
 ```
 
-Now a range of forecasts from each model and ensemble.
+Now the full range of forecasts from each model and ensemble.
 
 ```{r}
 #| label: plot-multiple-forecasts
@@ -328,7 +328,7 @@ ensemble_scores |>
 ```
 
 ::: {.callout-tip}
-##### Take 5 minutes
+##### Take 2 minutes
 
 Which model is best overall, and what other breakdowns (by date, by horizon) might change that answer?
 :::
@@ -359,24 +359,24 @@ We will look at two common weighting methods:
 
 - **Inverse WIS weighting**: weight each model by the inverse of its past WIS.
   Simple to understand and implement, but it does not optimise the weights to produce the best forecast; it just hopes that giving more weight to better past performers helps.
-- **A linear opinion pool (LOP)**: a weighted *mixture* of the models' distributions, with weights tuned to optimise the CRPS from samples.
+- **A linear opinion pool (LOP)**: a weighted mixture of the models' distributions, with weights tuned to optimise the CRPS from samples.
   This interprets the models as competing versions of the truth, rather than noisy estimates of one shared distribution.
 
 ::: {.callout-tip}
-##### Your turn: work in pairs (10--12 minutes)
+##### Your turn: work in pairs (10-12 minutes)
 
 Run both weighting methods below (each needs the other later, so run them both), then pair up and take one method each to make sense of.
 
 - **Partner A**: follow the **inverse WIS** weighting and be ready to explain how its weights are set.
 - **Partner B**: follow the **linear opinion pool** and be ready to explain how its weights are set.
 
-Then compare at the weights plot and score tables that follow: do your two methods agree on which models matter, and does either clearly beat the simple mean ensemble?
+Then compare at the weights plot and score tables that follow: do the two weighting methods agree, and does either clearly beat the simple ensembles?
 :::
 
 #### Inverse WIS weighting
 
 We first need the WIS for each model, which we already have.
-We weight by the inverse WIS over the period *before* each forecast, so we only use information available at the time.
+We weight by the inverse WIS over the period before each forecast, so we only use information available at the time.
 
 ```{r}
 #| label: calc-wis
@@ -421,14 +421,14 @@ inverse_wis_ensemble <- quantile_forecasts |>
   summarise(
     predicted = sum(predicted * weight),
     observed = unique(observed),
-    model = "Inverse WIS ensemble",
+    model = "Ensemble (Inverse WIS)",
     .by = c(origin_day, horizon, quantile_level, day)
   )
 ```
 
 #### Linear opinion pool
 
-Instead of averaging quantiles, we can treat the models as different possible versions of the truth and build a weighted *mixture* of their distributions.
+Instead of averaging quantiles, we can treat the models as different possible versions of the truth and build a weighted mixture of their distributions.
 This is done from samples, with weights tuned to optimise the CRPS.
 The procedure is also called a linear opinion pool.
 We use the `lopensemble` package.
@@ -484,7 +484,7 @@ lop_weights <- seq_along(lop_ensembles_obj) |>
 ## combine and generate quantiles from the resulting samples
 lop_ensembles <- lop_ensembles_obj |>
   bind_rows() |>
-  mutate(model = "Linear Opinion Pool") |>
+  mutate(model = "Ensemble (Linear Opinion Pool)") |>
   rename(day = date) |> ## rename column back for later plotting
   as_forecast_sample() |>
   as_forecast_quantile()
@@ -632,7 +632,7 @@ However, when we present work to policy, we often create ensembles combine model
 ## What are ensembles good for?
 
 Ensembles are increasingly how modelling reaches policy.
-At the same time, there are two different approaches to what an ensemble is good *for*.
+At the same time, there are two different approaches to what an ensemble is good for.
 
 **A product:** The benefits of gaining predictive accuracy are the focus of large, open, collaborative projects such as the US Flu Forecast Hub or the [European Respicast Hub](https://respicast.ecdc.europa.eu/), which collect forecasts in a standard format and combine them into a single ensemble.
 This typically involves:
@@ -646,37 +646,32 @@ The implicit value is the *product*: an ensemble forecast that can be scored, vi
 
 **A process:** An alternative view is to focus on the collaborative process of creating an ensemble from multiple modellers.
 For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers[@medley2022].
+This approach typically involves:
 
-This approach typically involves
-
-- Targeted recruitment among known modellers
-- Scheduled opportunities for interaction, including model comparison, identifying differences, and reaching consensus
-- An ensemble with shared ownership of the result.
-
-::: {.callout-tip}
-##### Take 2 minutes
-
-Consider the process or product approach to collaborative modelling.
-
-- What might each approach imply for the ensemble weighting schemes we've considered so far?
-:::
+- Selective recruitment among known modellers
+- Structured opportunities for interaction, including model comparison, identifying differences, and reaching consensus
+- Shared ownership of any consensus output
 
 ::: {.callout-tip}
 ##### Group discussion: product and process
 
-Consider the process or product approach to collaborative modelling.
+Consider the "product" or "process" approaches to collaborative modelling.
 Discuss in pairs, each taking the stance of a forecast producer or a forecast user.
 
-- What are some of the benefits and the costs of each approach, focusing on the process or the product of collaborative modelling?
+- How might each approach relate to the ensemble weighting schemes we considered above?
+- What are some of the benefits of a product-focused approach compared to a process-focused approach, and vice-versa?
+- What are some of the drawbacks or costs of each approach?
+  How could these be mitigated?
+- Are there any features of the outbreak setting that might make one approach more appropriate that the other?
 :::
 
 ## What's good enough?
 
 In this workshop, we have emphasised proper scoring rules with the "forecasting paradigm": sharpness subject to calibration.
-An ensemble makes the limits of using a single score obvious.
+Focusing on ensembles helps show why it isn't always useful to focus on a single score.
 
-An ensemble might be the most performant, but still worse to use: harder to explain, slower to produce, entirely dependent on the consistency and quality of the component models.
-On the other hand, an ensemble might be the most useful: a reasonably reliable product that gives greater opportunity for modeller-policy interaction.
+An ensemble might be the most performant, but still worse to use: harder to explain, slower to produce, and dependent on the consistency and quality of the component models.
+On the other hand, an ensemble might be the most useful: a reasonably reliable product that allows decision-makers to focus on a single useable result.
 This points towards a wider question that we haven't touched the sides of here: a good forecast may be not only sharp and calibrated, but also trusted, understood, and relevant to the decision at hand.
 
 # Wrap up
