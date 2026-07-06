@@ -1,4 +1,18 @@
-# nfidd (development version)
+# iddconf2026 1.4.0
+
+First release of the IDDconf 2026 workshop material, derived from the nfidd course at version 1.3.1.
+
+- created the IDDconf 2026 workshop "What is a forecast, and is it any good?" by slimming the nfidd course to a short, forecasting-focused selection (#2)
+- saved the observed onsets as a package dataset loaded across the sessions, removing per-session simulation and a seed inconsistency (#32)
+- reshaped and cleaned the forecast ensembles session and slides (#14, #24, #33, #34)
+- moved the PIT interactive to after its mathematical definition (#25)
+- fixed the forecasting-models introduction to match the workshop scope (#26)
+- updated the introduction slides to the workshop instructors and rationale (#23)
+- slimmed the participant install to be CmdStan-free and refreshed the r-multiverse snapshot (#21)
+- marked the forecasting-models simulation boxes optional to help with timing (#20)
+- trimmed the introduction timing, renamed the break, and dropped affiliations from the instructor names (#17)
+- dropped the "from a line list to decisions" introduction slides (#16)
+- updated the README and workshop documentation (#12, #13, #22)
 
 # nfidd 1.3.1
 

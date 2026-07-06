@@ -1,6 +1,6 @@
 Package: iddconf2026
 Title: Material to support the IDDconf 2026 forecasting workshop
-Version: 1.3.1.9000
+Version: 1.4.0
 Authors@R: c(
     person(
       given = "NFIDD course contributors",
