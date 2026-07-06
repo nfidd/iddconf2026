@@ -236,13 +236,10 @@ We fitted the random walk, more mechanistic and more statistical models to a ran
 Each model shares the same renewal-with-delays structure and differs only in how the reproduction number evolves over time.
 We now load these pre-generated forecasts and evaluate them.
 
-First we recreate the simulated outbreak so we have the observed onsets to compare against.
+First we load the saved dataset of observed onsets provided in the package so we have the observed data to compare against.
 
-```{r simulate-onsets}
-ip_pmf <- make_ip_pmf()
-onset_df <- simulate_onsets(
-  make_daily_infections(infection_times), ip_pmf
-)
+```{r load-onsets}
+data(onset_df)
 onset_df
 ```
 
