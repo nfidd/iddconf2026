@@ -39,6 +39,7 @@ quarto::quarto_render()
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 
 <!-- prettier-ignore-start -->
@@ -48,7 +49,8 @@ quarto::quarto_render()
 All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [allcontributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
 
 
-<a href="https://github.com/nfidd/iddconf2026/commits?author=seabbs">seabbs</a>
+<a href="https://github.com/nfidd/iddconf2026/commits?author=seabbs">seabbs</a>, 
+<a href="https://github.com/nfidd/iddconf2026/commits?author=kathsherratt">kathsherratt</a>
 
 
 <!-- markdownlint-enable -->
@@ -56,6 +58,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 ## License
