@@ -699,7 +699,7 @@ In a single forecasting workflow, the process of creating an ensemble offers a p
 We could see the ensemble as a meta model that is flexible enough to express the full range of uncertainty in our own model specification. 
 
 Among multiple modellers, the coordination required to create an ensemble can create a useful venue for model comparison and broader evidence synthesis.
-For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers [@medleyConsensusEvidenceRole2022a].
+For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a narrative synthesis of modelling evidence [@medleyConsensusEvidenceRole2022a].
 This approach typically involves:
 
 - Selective recruitment among known modellers
