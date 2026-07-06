@@ -36,8 +36,14 @@ All contributions to this project are gratefully acknowledged using the
 following the [allcontributors](https://allcontributors.org)
 specification. Contributions of any kind are welcome!
 
+### Code
+
 <a href="https://github.com/nfidd/iddconf2026/commits?author=seabbs">seabbs</a>,
 <a href="https://github.com/nfidd/iddconf2026/commits?author=kathsherratt">kathsherratt</a>
+
+### Issues
+
+<a href="https://github.com/nfidd/iddconf2026/issues?q=is%3Aissue+author%3Amark-burdon">mark-burdon</a>
 
 <!-- markdownlint-enable -->
 
