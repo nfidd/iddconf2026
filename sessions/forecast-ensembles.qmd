@@ -672,60 +672,46 @@ A good working prior is that equal weights are hard to beat.
 
 :::
 
-::: {.callout-note .optional collapse="true"}
-## Combining models from different modellers
-
-Throughout the course we have carefully built models from an understanding of the data-generating process.
-Combining these might make sense when we have a clear idea of where variation comes from.
-However, when we present work to policy, we often create ensembles combine models from different teams, with different and often unstated assumptions about that process.
-
-- Where does "independence" matter in the modelling process?
-:::
-
 ## What are ensembles good for?
 
-Ensembles are increasingly how modelling reaches policy.
-At the same time, there are two different approaches to what an ensemble is good for.
+An ensemble might be the most performant, but still harder to use: harder to explain, slower to produce, and sensitive to the consistency of its component models (though, as in machine learning, an ensemble of individually weak models can still perform well together).
+On the other hand, an ensemble might be the most useful: a reasonably reliable product that allows decision-makers to focus on a single useable result.
+This points towards a wider question that we haven't touched the sides of here: a good forecast should be not only sharp and calibrated, but also trusted, understood, and relevant to the decision at hand. 
 
-**A product:** The benefits of gaining predictive accuracy are the focus of large, open, collaborative projects such as the US Flu Forecast Hub or the [European Respicast Hub](https://respicast.ecdc.europa.eu/), which collect forecasts in a standard format and combine them into a single ensemble.
+This might suggest two different views of what an ensemble might be good for.
+
+**A product:** The benefits of gaining predictive accuracy are the focus of large, open, collaborative projects such as the US Flu Forecast Hub or the [European Respicast Hub](https://respicast.ecdc.europa.eu/).
+These projects collate forecasts in a standard format and combine them into a single ensemble.
+Typically, while each model may be visualised, the resulting ensemble output is the focus [@lutzApplyingInfectiousDisease2019b].
 This typically involves:
 
 - Creating a standardised, open platform for anyone to contribute
 - Collating all models' output based on minimal validation checks
 - Combining in an ensemble, which becomes the focus of public communication
 
-Typically, there is relatively little opportunity for interaction between modellers, and while each model may be visualised, the resulting ensemble is the focus output.
-The implicit value is the *product*: an ensemble forecast that can be scored, visualised, and viewed by anyone.
-
 **A process:** An alternative view is to focus on the collaborative process of creating an ensemble from multiple modellers.
-For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers[@medley2022].
+For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers[@medleyConsensusEvidenceRole2022a].
 This approach typically involves:
 
 - Selective recruitment among known modellers
 - Structured opportunities for interaction, including model comparison, identifying differences, and reaching consensus
 - Shared ownership of any consensus output
 
-::: {.callout-tip}
-##### Group discussion: product and process
+# Going further
 
-Consider the "product" or "process" approaches to collaborative modelling.
-Discuss in pairs, each taking the stance of a forecast producer or a forecast user.
-
-- How might each approach relate to the ensemble weighting schemes we considered above?
+- How might the "product" or "process" approaches relate to the ensemble weighting schemes we considered above?
 - What are some of the benefits of a product-focused approach compared to a process-focused approach, and vice-versa?
-- What are some of the drawbacks or costs of each approach?
+- What are some of the drawbacks and costs of each approach?
   How could these be mitigated?
 - Are there any features of the outbreak setting that might make one approach more appropriate that the other?
-:::
 
-## What's good enough?
+## Methods in the real world
 
-In this workshop, we have emphasised proper scoring rules with the "forecasting paradigm": sharpness subject to calibration.
-Focusing on ensembles helps show why it isn't always useful to focus on a single score.
-
-An ensemble might be the most performant, but still worse to use: harder to explain, slower to produce, and dependent on the consistency and quality of the component models.
-On the other hand, an ensemble might be the most useful: a reasonably reliable product that allows decision-makers to focus on a single useable result.
-This points towards a wider question that we haven't touched the sides of here: a good forecast may be not only sharp and calibrated, but also trusted, understood, and relevant to the decision at hand.
+- @howertonContextdependentRepresentationBetweenmodel2023 suggests that the choice of an ensemble method should be informed by an assumption about how to represent uncertainty between models: whether differences between component models is "noisy" variation around a single underlying distribution, or represents structural uncertainty about the system.
+- @sherrattPredictivePerformanceMultimodel2023 investigates the performance of different ensembles in the European COVID-19 Forecast Hub.
+- @amaralPostprocessingWeightedCombination2025 discusses the challenges in improving on the predictive performance of simpler approaches using weighted ensembles.
+- @lutzApplyingInfectiousDisease2019b describes the public health use of ensemble forecasts of influenza in the Unites States.
+- @medleyConsensusEvidenceRole2022a discusses the process of convening a group of independent modelling teams to provide a consensus for UK COVID-19 public health policy.
 
 # Wrap up
 
