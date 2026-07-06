@@ -674,28 +674,41 @@ A good working prior is that equal weights are hard to beat.
 
 ## What are ensembles good for?
 
-An ensemble might be the most performant, but still harder to use: harder to explain, slower to produce, and sensitive to the consistency of its component models (though, as in machine learning, an ensemble of individually weak models can still perform well together).
-On the other hand, an ensemble might be the most useful: a reasonably reliable product that allows decision-makers to focus on a single useable result.
-This points towards a wider question that we haven't touched the sides of here: a good forecast should be not only sharp and calibrated, but also trusted, understood, and relevant to the decision at hand. 
+So far, we've explored the value of using ensembles in our own forecasting workflow.
+The last ten years has also seen substantial investment in producing ensemble forecasts from many independent modellers [@lutzApplyingInfectiousDisease2019b].
+At the same time, ensembles may be harder to use than an individual model: harder to explain, slower to produce, and sensitive to the consistency of its component models.
 
-This might suggest two different views of what an ensemble might be good for.
+So why worry about ensembles?
+We could look at their value in two ways:
 
-**A product:** The benefits of gaining predictive accuracy are the focus of large, open, collaborative projects such as the US Flu Forecast Hub or the [European Respicast Hub](https://respicast.ecdc.europa.eu/).
-These projects collate forecasts in a standard format and combine them into a single ensemble.
-Typically, while each model may be visualised, the resulting ensemble output is the focus [@lutzApplyingInfectiousDisease2019b].
+::: {.callout-note}
+
+**Ensemble as a product:** 
+Ensembles offer consistently more performant forecasts: as in machine learning, an ensemble of individually weak models can still perform well together.
+In public health use, an ensemble might be useful as a reliable product that allows decision-makers to focus on a single result rather than interpreting across modellers' work.
+
+Such gains in reliable predictive accuracy have been the focus of large, open, collaborative projects such as the US Flu Forecast Hub [@lutzApplyingInfectiousDisease2019b] or the [European Respicast Hub](https://respicast.ecdc.europa.eu/).
 This typically involves:
 
 - Creating a standardised, open platform for anyone to contribute
 - Collating all models' output based on minimal validation checks
 - Combining in an ensemble, which becomes the focus of public communication
 
-**A process:** An alternative view is to focus on the collaborative process of creating an ensemble from multiple modellers.
+**Ensemble as a process:** 
+In a single forecasting workflow, the process of creating an ensemble offers a principled way to compare among multiple hypotheses.
+We could see the ensemble as a meta model that is flexible enough to express the full range of uncertainty in our own model specification. 
+
+Among multiple modellers, the coordination required to create an ensemble can create a useful venue for model comparison and broader evidence synthesis.
 For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers [@medleyConsensusEvidenceRole2022a].
 This approach typically involves:
 
 - Selective recruitment among known modellers
 - Structured opportunities for interaction, including model comparison, identifying differences, and reaching consensus
 - Shared ownership of any consensus output
+
+:::
+
+This points us back towards the question of what a forecast is good for: sharp and calibrated, but also trusted, understood, and relevant to the decision at hand. 
 
 # Going further
 
