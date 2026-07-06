@@ -19,11 +19,7 @@ Last, we'll return to the question *is it any good?*, considering how an ensembl
 
 ## Objectives
 
-By the end of this session you will be able to:
-
-1. **construct** a simple unweighted and weighted ensemble using R;
-2. **compare** ensemble scores to their component models and evaluate using quantile-based scores;
-3. **interpret** the politics of collaborative modelling and assess the costs and benefits of different forecasting models
+The aim of this session is to introduce the concept of ensembles of forecasts and to evaluate the performance of ensembles of the models we explored in the [forecasting models](forecasting-models) session.
 
 ::: {.callout-note collapse="true"}
 # Setup
@@ -122,8 +118,8 @@ head(onset_df)
 
 # Forecast ensembles
 
-We now combine multiple forecasts into one.
-This is sometimes called *stacking*, and the resulting forecasts are said to come from an *ensemble* of models.
+We will now move to creating forecasts as a combination of multiple forecasts.
+This procedure is also sometimes called _stacking_, and the resulting forecasts are said to come from _ensembles_ of forecast models.
 
 ## Quantile-based ensembles
 
@@ -275,8 +271,24 @@ plot_multiple_forecasts <- simple_ensembles |>
 plot_multiple_forecasts
 ```
 
-Both simple ensembles are less variable than the statistical models but more variable than the mechanistic model, and both look more like the statistical models.
-The mean ensemble has slightly tighter uncertainty than the median ensemble, and is more variable across forecast dates, especially after the peak.
+::: {.callout-tip}
+## Take 2 minutes
+How do these ensembles compare to the individual models?
+How do they differ from each other, and are there any differences across forecast dates?
+:::
+
+::: {.callout-note collapse="true"}
+## Solution
+How do these ensembles compare to the individual models?
+
+- Both simple ensembles appear to be less variable than the statistical models but more variable than the mechanistic model.
+- Both ensembles are more like the statistical models than the mechanistic model.
+
+How do they differ from each other, and are there any differences across forecast dates?
+
+- The mean ensemble has slightly tighter uncertainty than the median ensemble.
+- The mean ensemble is more variable across forecast dates, especially after the peak of the outbreak.
+:::
 
 #### Evaluation
 
@@ -290,29 +302,9 @@ ensemble_scores <- simple_ensembles |>
 
 ::: {.callout-note}
 The **weighted interval score (WIS)** [@bracherEvaluatingEpidemicForecasts2021] is a proper scoring rule for quantile forecasts that approximates the **Continuous Ranked Probability Score (CRPS)** by a weighted sum of prediction intervals.
-As the number of intervals grows, the WIS converges to the CRPS, combining sharpness with penalties for over- and under-prediction.
+As the number of intervals increases, the WIS converges to the CRPS, combining sharpness with penalties for over- and under-prediction.
 
-We use it here because we are scoring quantiles, not samples, so we cannot use the CRPS directly.
-:::
-
-A high-level overview of the scores by model:
-
-```{r score-overview}
-ensemble_scores |>
-  summarise_scores(by = c("model"))
-```
-
-::: {.callout-tip}
-##### Take 2 minutes
-
-Which model is best overall, and what other breakdowns (by date, by horizon) might change that answer?
-:::
-
-::: {.callout-note collapse="true"}
-##### Solution
-
-- The mean ensemble is usually the best performing ensemble overall, but the more mechanistic model often remains the single best model.
-- Performance can vary a lot across forecast dates and horizons, so a single overall number hides a great deal.
+We use it here because we are scoring quantiles, not samples, so we cannot use the CRPS directly as we did before.
 :::
 
 ::: {.callout-tip .optional collapse="true"}
@@ -326,29 +318,61 @@ Which model is best overall, and what other breakdowns (by date, by horizon) mig
 Add prediction intervals and watch the WIS converge to the CRPS, with the same dispersion / over / under split.
 :::
 
+We start with a high-level overview of the scores by model:
+
+```{r score-overview}
+ensemble_scores |>
+  summarise_scores(by = c("model"))
+```
+
+::: {.callout-tip}
+## Take 2 minutes
+
+What do you think the scores are telling you? Which model do you think is best? What other scoring breakdowns might you want to look at?
+:::
+
+::: {.callout-note collapse="true"}
+## Solution
+
+What do you think the scores are telling you? Which model do you think is best?
+
+- The mean ensemble appears to be the best performing ensemble model overall.
+- However, the more mechanistic model remains the single best model among any.
+
+What other scoring breakdowns might you want to look at?
+
+- There might be variation between the performance of different ensemble methods over different forecast dates, or the length of forecast horizon.
+:::
+
 ## Weighted ensembles
 
 The simple mean and median treat every model the same.
-We could instead weight the models, giving more weight to those that have forecast well.
-We will look at two common weighting methods:
+We could instead weight the models, for example giving more weight to those that have forecast well.
+As the crudest option, **filtering** simply drops a poorly performing model, which is equivalent to giving it a weight of zero.
 
-- **Inverse WIS weighting**: weight each model by the inverse of its past WIS.
-  Simple to understand and implement, but it does not optimise the weights to produce the best forecast; it just hopes that giving more weight to better past performers helps.
-- **A linear opinion pool (LOP)**: a weighted mixture of the models' distributions, with weights tuned to optimise the CRPS from samples.
-  This interprets the models as competing versions of the truth, rather than noisy estimates of one shared distribution.
+Let's look at two common weighting methods:
+
+- **Inverse WIS weighting**: 
+  - Use: weight each model by the inverse of its past WIS. 
+    Simple to understand and implement; relies on the hope that giving more weight to better past performers yields a better ensemble.
+  - Interpretation: each componennt model provides a different uncertain estimates of a true distribution of a given shape.
+- **A linear opinion pool (LOP)**: 
+  - Use: weights are tuned to optimise the CRPS from samples, creating a weighted mixture of the models' distributions.
+  - Interpretation: each component model is a competing version of the truth among multiple possible versions, with weights assigned to each representing the probability of each one being the true one.
 
 ::: {.callout-tip}
-##### Your turn: work in pairs (10-12 minutes)
+## Take 5 minutes: work in pairs
 
-Run both weighting methods below (each needs the other later, so run them both), then pair up and take one method each to make sense of.
+Pair up and take one method each to make sense of. 
+Note that if you are runnning code interactively, you will still need to run each code chunk.
 
 - **Partner A**: follow the **inverse WIS** weighting and be ready to explain how its weights are set.
 - **Partner B**: follow the **linear opinion pool** and be ready to explain how its weights are set.
 
-Then compare at the weights plot and score tables that follow: do the two weighting methods agree, and does either clearly beat the simple ensembles?
+Compare the weights plot and score tables that follow: do the two weighting methods agree, and does either clearly beat the simple ensembles?
 :::
 
-#### Inverse WIS weighting
+### Inverse WIS weighting
 
 We first need the WIS for each model, which we already have.
 We weight by the inverse WIS over the period before each forecast, so we only use information available at the time.
@@ -397,12 +421,9 @@ inverse_wis_ensemble <- quantile_forecasts |>
   )
 ```
 
-#### Linear opinion pool
+### Linear opinion pool
 
-Instead of averaging quantiles, we can treat the models as different possible versions of the truth and build a weighted mixture of their distributions.
-This is done from samples, with weights tuned to optimise the CRPS.
-The procedure is also called a linear opinion pool.
-We use the `lopensemble` package.
+We can build a weighted mixture of models' distributions, with sample weights tuned to optimise the CRPS, using the `lopensemble` package.
 
 Fitting the mixture weights optimises for every forecast date, which is slow with 1000 samples.
 For demonstration here, we'll thin to 200 samples per forecast: this is about four times faster and gives essentially the same weights.
@@ -459,7 +480,18 @@ lop_ensembles <- lop_ensembles_obj |>
   as_forecast_quantile()
 ```
 
-### Compare the weighted ensembles
+::: {.callout-tip .optional collapse="true"}
+## Interactive: opinion pool vs quantile averaging
+
+```{=html}
+<iframe class="nfidd-embed" src="../interactive/forecast-ensembles.html?embed=headtohead" title="opinion pool vs quantile averaging interactive" loading="lazy" style="width:100%;height:900px;border:1px solid #e5e7eb;border-radius:10px;background:#fff"></iframe>
+<script>(function(){if(window.__nfiddEmbedInit)return;window.__nfiddEmbedInit=1;window.addEventListener('message',function(ev){var h=ev&&ev.data&&ev.data.nfiddEmbedHeight;if(!h)return;document.querySelectorAll('iframe.nfidd-embed').forEach(function(f){if(f.contentWindow===ev.source)f.style.height=(h+24)+'px';});});})();</script>
+```
+
+Average probabilities (opinion pool) vs quantiles (Vincent) — and watch them diverge.
+:::
+
+### Compare the different ensembles
 
 We collect the weighted ensembles alongside the simple ensembles.
 
@@ -499,32 +531,37 @@ weights |>
 ```
 
 ::: {.callout-tip}
-##### Take 2 minutes
-
+#### Take 2 minutes
 Compare notes with the person next to you.
 
-Do the two methods weight the models differently?
+Are the weights assigned to models different between the three methods?
 How do the weights change over time?
-Are you surprised, given what you know about how the models performed?
+Are you surprised by the results given what you know about the models performance?
 :::
 
-::: {.callout-note collapse="true"}
-##### Solution
+::: {.callout-note collapse="true"} 
+#### Solution
+Are the weights assigned to models different between the methods?
 
-- The two methods can disagree markedly, especially early on when there is little data to learn weights from.
-- **Inverse WIS** normalises the inverse of each model's past WIS, so it always spreads weight across all three models and never sets a weight to zero.
-  It shifts only gradually as scores accumulate.
-- The **linear opinion pool** optimises its mixture weights directly against past performance, so it is freer to concentrate weight on whichever model has been fitting best, and its weights can swing more sharply from one forecast date to the next.
-- Look at whether a poorly performing model still receives non-trivial weight.
-  If it does, that suggests its poor performance is concentrated in certain phases of the outbreak rather than throughout, so it can still add value at other times.
+- There are major differences especially early on, where the LOP ensemble prefers the random walk model.
+- The inverse WIS model transitions from fairly even weights early on to giving most weight to the mechanistic model, however it does so in a more balanced manner than the optimised ensemble, giving substantial weight to all three models.
+
+How do the weights change over time?
+
+- Early on the more statistical models have higher weights in the respective ensemble methods.
+- Gradually the mechanistic model gains weight in both models and by the end of the forecast horizon it represents the entire ensemble.
+
+Are you surprised by the results given what you know about the models performance?
+
+- As the random walk model is performing poorly, you would expect it to have low weights but actually it often doesn't.
+  This implies that its poor performance is restricted to certain parts of the outbreak.
+- The mechanistic model performs really well overall and dominates the final optimised ensemble.
 :::
 
-## Quantitative evaluation
+## Evaluation
 
-Finally we score the weighted ensembles.evaluate accuracy We drop the first two weeks, which the weighted methods cannot forecast as they need training data.
-
-```{r}
-#| label: score-weighted-ensembles
+Finally we evaluate the accuracy of the weighted ensembles.
+We drop the first two weeks, which the weighted methods cannot forecast as they need training data.
 
 ```{r score-weighted-ensembles}
 weighted_ensemble_scores <- weighted_ensembles |>
@@ -554,7 +591,6 @@ log_ensemble_scores |>
 ```
 
 The best weighted ensembles only slightly outperform the simple mean, and sometimes do worse.
-Even though this is a simple demonstration, with only three models, this replicates one of the most robust findings in forecasting.
 
 ::: {.callout-note .optional collapse="true"}
 ## Fine-tuning weights
