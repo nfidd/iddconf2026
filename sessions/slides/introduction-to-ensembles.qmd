@@ -1,142 +1,128 @@
 ---
-title: "Multi-model ensembles"
+title: "Introduction to ensembles"
 author: "What is a forecast, and is it any good?"
 bibliography: ../../nfidd.bib
 engine: knitr
 format:
   revealjs:
     output: slides/introduction-to-ensembles.html
-    footer: "Multi-model ensembles"
-    chalkboard: true
+    footer: "Introduction to ensembles"
 ---
 
 ## Ensembles: many forecasts into one
 
-![Figure credit: Evan Ray and Nick Reich](figures/ensemble.jpg)
+![Figure credit: Evan Ray and Nick Reich](figures/ensemble.jpg){width="60%" fig-align="center"}
 
 ## Why ensemble?
 
-::: {.fragment .fade-in}
+::: {.columns}
+::::: {.column width="50%"}
 1. Models are specialists and you want all the perspectives
-    - different data sources
-    - different philosophies, e.g. more mechanistic or more statistical approaches
-    - different methodologies and parameterizations
+   - different data sources
+   - different philosophies, e.g. more mechanistic or more statistical approaches
+   - different methodologies and parameterizations
+:::::
+
+::::: {.column width="50%"}
+![Single model in Respicast](figures/respicast-single.png){width="100%"}
+
+![Many models in Respicast](figures/respicast-multi.png){width="100%"}
+:::::
 :::
 
-::: {.fragment .fade-in}
-2. A single "consensus forecast" is easier for decision-makers to digest 
-:::
+## Why ensemble?
 
-## "Whole is greater than sum of parts"
-
-Average of multiple predictions is often (not always) more performant than any individual model
-
+::: {.columns}
+::::: {.column width="50%"}
+2. "Whole is greater than sum of parts"
+- Average of multiple predictions is often (not always) more performant than any individual model
 - Strong evidence in weather & economic forecasting
-
 - Recent evidence in infectious disease forecasting
-    - Ebola[@funkAssessingPerformanceRealtime2019]
-    - dengue[@colon-gonzalez_probabilistic_2021]
-    - flu[@reich_accuracy_2019]
-    - COVID-19[@cramer_evaluation_2022]
+    - Ebola [@funkAssessingPerformanceRealtime2019]
+    - Dengue [@colon-gonzalez_probabilistic_2021]
+    - Flu [@reich_accuracy_2019]
+    - COVID-19 [@cramer_evaluation_2022]
+:::::
 
-## Ensemble methods: how to average?
+::::: {.column width="50%"}
+![Respicast ensemble](figures/respicast-comparison.png){width="100%"}
+:::::
+:::
 
-![Figure credit: @howertonContextdependentRepresentationBetweenmodel2023](figures/lop-vs-vincent.jpg)
+## Ensemble methods: how to combine?
 
-## Ensemble methods: to weight or not?
+::: {.columns}
+::::: {.column width="50%"}
+Typically... take the (equal) average!
 
-   - Weight models by past forecast performance
-   
-      - e.g. using forecast scores
-      
-   - Rarely better than equal average
-   
-      - lots of uncertainty in weight estimation!
-      - put a "strong prior" on equal weights, both in your mental and statistical models
+Combination depends on your view of why models are different:
+
+- Noisy expressions of a single underlying truth?
+- Competing uncertainty among multiple plausible hypotheses?
+:::::
+
+::::: {.column width="50%"}
+![Figure credit: @howertonContextdependentRepresentationBetweenmodel2023](figures/lop-vs-vincent.jpg){width="100%"}
+:::::
+:::
+
+## Ensemble methods: unequal weights?
+
+- Can weight models by past forecast performance
+  - e.g. using forecast scores
+
+- Rarely better than equal average
+  - lots of uncertainty in weight estimation
+  - past performance is not guaranteed to predict future performance
+    ... put a "strong prior" on equal weights
+
+## Ensembles from multiple modellers 
+
+Collaborative ensembles increasingly used in infectious disease modelling
+
+![@Reich2022-jo](figures/history-of-hubs-2023.png){width="70%" fig-align="center"}
 
 ## Collaborative modelling "hubs"
 
-:::: {.columns}
-
-::: {.column width="50%"}
+::: {.columns}
+::::: {.column width="50%"}
 - Projects run by research groups, public health agencies
-
 - Participation generally open
-   
-- Standard format enables 
+- Standard format enables
   - data validation
   - ensemble-building
   - model evaluation
   - visualization
-::: 
+:::::
 
-::: {.column width="50%"}
-
-![[Hubverse](https://hubverse.io/)](figures/hub-modeler-flow.png)
-
+::::: {.column width="50%"}
+![[Hubverse](https://hubverse.io/)](figures/hub-modeler-flow.png){width="100%"}
+:::::
 :::
 
-::::
+## Is an ensemble any good?
 
-## Hubs increasingly used in infectious disease modelling
+::: {.columns}
+::::: {.column width="50%"}
+**Ensemble as a product**
 
-![@Reich2022-jo](figures/history-of-hubs-2023.png)
+- typically reliable performance benefit over single model
+- creates a single product for downstream forecast users 
+:::::
 
-## ... e.g., the European [Respicast Hub](https://respicast.ecdc.europa.eu/) {.smaller}
-![](figures/respicast-forecasts.png)
+::::: {.column width="50%"}
+**Ensemble as a process**
 
-## Single model {.smaller}
-![](figures/respicast-single.png)
-
-## ... Multiple models {.smaller}
-![](figures/respicast-multi.png)
-
-## ... ... Multi-model ensemble {.smaller}
-![](figures/respicast-comparison.png)
-
-## The politics of ensembles: output vs process
-
-:::: {.columns}
-
-::: {.column width="50%"}
-**Hubs: ensemble-as-output**
-
-- value is the *product*
-- standardised, validated, comparable
-- a forecast you can score and hand over
-:::
-
-::: {.column width="50%"}
-**Consensus (e.g. SPI-M): ensemble-as-process**
-
-- value is the *process* of agreeing[@medley2022]
-- deliberation, challenge, shared ownership
-- one message the room stands behind
-:::
-
-::::
-
-::: {.fragment .fade-in}
-Which would you want going to a minister? Which would you want to *build*?
-:::
-
-## When is more more, or less?
-
-Adding a model has a **cost** and a **marginal value**
-
-- gains from ensembling are real but **modest** and context-dependent
-- simple averaging is hard to beat: the *forecast combination puzzle*
-- **diminishing returns**: it depends on how *independent* the models really are
-
-::: {.fragment .fade-in}
-"Is it any good?" is wider than a score: **trust, process, communication** count too
+- principled approach to model comparison and synthesis
+- opportunity for modeller challenge, consensus, and shared responsibility for outputs [@medleyConsensusEvidenceRole2022a]
+:::::
 :::
 
 ## `r fontawesome::fa("laptop-code", "white")` Your Turn {background-color="#447099" transition="fade-in"}
 
 1. Create unweighted and weighted ensembles from multiple models.
 2. Evaluate the ensembles against their constituent models.
-3. Debate whether "more" modelling is worth it, and for whom.
+3. Consider when an ensemble is any good, and for whom.
 
 #
 
@@ -146,4 +132,3 @@ Adding a model has a **cost** and a **marginal value**
 
 ::: {#refs}
 :::
-
