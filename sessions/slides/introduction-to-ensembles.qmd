@@ -94,10 +94,49 @@ Average of multiple predictions is often (not always) more performant than any i
 ## ... ... Multi-model ensemble {.smaller}
 ![](figures/respicast-comparison.png)
 
+## The politics of ensembles: output vs process
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Hubs: ensemble-as-output**
+
+- value is the *product*
+- standardised, validated, comparable
+- a forecast you can score and hand over
+:::
+
+::: {.column width="50%"}
+**Consensus (e.g. SPI-M): ensemble-as-process**
+
+- value is the *process* of agreeing[@medley2022]
+- deliberation, challenge, shared ownership
+- one message the room stands behind
+:::
+
+::::
+
+::: {.fragment .fade-in}
+Which would you want going to a minister? Which would you want to *build*?
+:::
+
+## When is more more, or less?
+
+Adding a model has a **cost** and a **marginal value**
+
+- gains from ensembling are real but **modest** and context-dependent
+- simple averaging is hard to beat: the *forecast combination puzzle*
+- **diminishing returns**: it depends on how *independent* the models really are
+
+::: {.fragment .fade-in}
+"Is it any good?" is wider than a score: **trust, process, communication** count too
+:::
+
 ## `r fontawesome::fa("laptop-code", "white")` Your Turn {background-color="#447099" transition="fade-in"}
 
-1. Create unweighted and weighted ensembles using forecasts from multiple models.
-2. Evaluate the forecasts from ensembles compared to their constituent models.
+1. Create unweighted and weighted ensembles from multiple models.
+2. Evaluate the ensembles against their constituent models.
+3. Debate whether "more" modelling is worth it, and for whom.
 
 #
 
