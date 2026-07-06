@@ -3,8 +3,7 @@
 
 Material for the [IDDconf 2026](https://iddconf.com) workshop on
 visualising, evaluating and combining infectious disease forecasts, run
-on the morning of Tuesday 7 July 2026 by Kath Sherratt and Sam Abbott
-(LSHTM).
+on the morning of Tuesday 7 July 2026 by Kath Sherratt and Sam Abbott.
 
 This is a short, forecasting-focused selection from the fuller course on
 [Nowcasting and forecasting infectious disease
