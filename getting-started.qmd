@@ -63,7 +63,7 @@ install.packages("pak")
 Then install the `iddconf2026` package and all of its dependencies from GitHub:
 
 ```{r install, eval=FALSE}
-pak::pak("nfidd/iddconf2026")
+pak::pak("nfidd/iddconf2026", dependencies = TRUE)
 ```
 
 Then you can check that the installation completed successfully by loading the package into your **R** session:
@@ -126,7 +126,7 @@ If you're returning to the course after some time or joining a live session, you
 1.  **Update the `iddconf2026` package** (this is quick and ensures you have the latest functions):
 
     ```{r update_package, eval=FALSE}
-    pak::pak("nfidd/iddconf2026")
+    pak::pak("nfidd/iddconf2026", dependencies = TRUE)
     ```
 2.  **Download fresh course materials** if using local files:
 

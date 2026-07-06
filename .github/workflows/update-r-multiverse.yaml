@@ -5,6 +5,10 @@ on:
     - cron: '0 10 1 * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   check-update:
     runs-on: ubuntu-latest
@@ -59,40 +63,8 @@ jobs:
             echo "Already up to date: $CURRENT"
           fi
 
-      - name: Verify cmdstanr availability in new snapshot
-        if: steps.compare.outputs.needs_update == 'true'
-        id: verify
-        run: |
-          LATEST="${{ steps.latest.outputs.date }}"
-          REPO_URL="https://production.r-multiverse.org/$LATEST"
-
-          if Rscript -e "
-            tryCatch({
-              pkgs <- available.packages(repos = '$REPO_URL')
-              if ('cmdstanr' %in% pkgs[, 'Package']) {
-                cat('cmdstanr found\n')
-                quit(status = 0)
-              } else {
-                cat('cmdstanr not found\n')
-                quit(status = 1)
-              }
-            }, error = function(e) {
-              cat('Error checking snapshot:', conditionMessage(e), '\n')
-              quit(status = 1)
-            })
-          "; then
-            echo "available=true" >> $GITHUB_OUTPUT
-            VERSION=$(Rscript -e "cat(available.packages(repos = '$REPO_URL')['cmdstanr', 'Version'])")
-            echo "version=$VERSION" >> $GITHUB_OUTPUT
-            echo "cmdstanr $VERSION is available in $LATEST snapshot"
-          else
-            echo "available=false" >> $GITHUB_OUTPUT
-            echo "::warning::cmdstanr is not available in $LATEST snapshot yet"
-            exit 1
-          fi
-
       - name: Update DESCRIPTION and workflow files
-        if: steps.compare.outputs.needs_update == 'true' && steps.verify.outputs.available == 'true'
+        if: steps.compare.outputs.needs_update == 'true'
         run: |
           CURRENT="${{ steps.current.outputs.date }}"
           LATEST="${{ steps.latest.outputs.date }}"
@@ -104,7 +76,7 @@ jobs:
           git diff
 
       - name: Create Pull Request
-        if: steps.compare.outputs.needs_update == 'true' && steps.verify.outputs.available == 'true'
+        if: steps.compare.outputs.needs_update == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "Update R-multiverse production snapshot to ${{ steps.latest.outputs.date }}"
@@ -115,6 +87,5 @@ jobs:
             Automated PR to update the R-multiverse production snapshot.
 
             - Update from `${{ steps.current.outputs.date }}` to `${{ steps.latest.outputs.date }}`
-            - Verified cmdstanr ${{ steps.verify.outputs.version }} is available
           labels: dependencies
           token: ${{ secrets.GITHUB_TOKEN }}
