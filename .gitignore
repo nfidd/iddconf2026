@@ -11,6 +11,11 @@ inst/stan/simple-nowcast
 inst/stan/*
 !inst/stan/functions
 !inst/stan/*.stan
+
+# Compiled Stan model binaries produced during data generation
+data-raw/stan/*
+!data-raw/stan/*.stan
+!data-raw/stan/functions/
 *.html
 *.rmarkdown
 .vscode/
