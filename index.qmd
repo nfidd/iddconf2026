@@ -7,10 +7,10 @@ about:
   links:
     - icon: chat-fill
       text: Start the workshop
-      href: sessions/introduction-and-course-overview.html
+      href: https://nfidd.github.io/iddconf2026/sessions/introduction-and-course-overview.html
     - icon: calendar-event
       text: Timetable
-      href: timetable.html
+      href: https://nfidd.github.io/iddconf2026/timetable.html
     - icon: github
       text: Visit us on GitHub
       href: https://github.com/nfidd/iddconf2026
