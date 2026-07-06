@@ -80,7 +80,8 @@ ggplot(data, aes(x = t, y = R)) +
 
 # Forecasting models as a spectrum
 
-A large part of this course has been about showing the importance of understanding and modelling the underlying mechanisms of the data generating process.
+The forecasts we have used so far come from a renewal model, which builds in mechanistic structure about how infections generate future onsets and how transmission changes over time.
+Modelling the underlying mechanisms of the data generating process like this can be powerful.
 However, in many forecasting scenarios, we may not have a good understanding of the underlying mechanisms, or the data may be too noisy to make accurate predictions.
 The worst case is that we have mistaken beliefs about the underlying mechanisms and use these to make predictions which are systematically wrong and misleading.
 In these cases, forecasters often use _statistical models_ to make predictions which have little or no mechanistic basis.
