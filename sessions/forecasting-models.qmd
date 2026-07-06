@@ -104,7 +104,7 @@ $$
 This approximates susceptible depletion as a linear function of the number of susceptibles in the population. This is a simplification but it is a good starting point.
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-note .optional collapse="true"}
 
 ## What behaviour would we expect from this model?
 
@@ -141,6 +141,7 @@ The key assumptions we are making here are:
 - The reproduction number only changes due to susceptible depletion
 - The number of new cases at each time is proportional to the number of susceptibles in the population.
 
+As the susceptible pool shrinks, this pulls the reproduction number down over time, so the model captures the downturn in cases that the plain renewal model overestimated.
 We implemented this susceptible-depletion renewal model and fitted it to our simulated outbreak offline.
 We compare its forecasts with the other models later in this session.
 
@@ -167,7 +168,7 @@ $$
 
 where $\epsilon_t$ is a normally distributed error term with mean 0 and standard deviation $\sigma$ and $\phi$ is a parameter between -1 and 1. If we restrict $\phi$ to be between 0 and 1, we get a model which is biased towards a reproduction number of 1 but which can still capture trends in the data that decay over time.
 
-::: {.callout-note collapse="true"}
+::: {.callout-note .optional collapse="true"}
 ## What behaviour would we expect from this model?
 
 ```{r}
@@ -189,19 +190,21 @@ ggplot(data, aes(x = t, y = R)) +
 ```
 :::
 
-However, we probably don't want a model which is biased towards a reproduction number of 1 (unless we have good reason to believe that is the expected behaviour). So what should we do?
+However, we probably don't want a model which is biased towards a reproduction number of 1 (unless we have good reason to believe that is the expected behaviour).
+Because we expect a trend in the reproduction number, we can instead model the _change_ in the log reproduction number from one step to the next, a time series technique called _differencing_.
+This gives a model with momentum, where recent trends in the reproduction number carry forward into the forecast rather than decaying back towards 1.
 
-Returning to the idea that the reproduction number is a _non-stationary_ time series, as we expect to have a trend in the reproduction numbers we want to capture, we can use a method from the field of time series analysis called _differencing_ to make the time series stationary. This involves taking the difference between consecutive values in the time series. For the log-transformed reproduction number, this would be:
+::: {.callout-note .optional collapse="true"}
+## What behaviour would we expect from this model?
+
+Differencing makes a non-stationary time series stationary by modelling the difference between consecutive values.
+For the log-transformed reproduction number, this is:
 
 $$
 log(R_t) - log(R_{t-1}) = \phi (log(R_{t-1}) - log(R_{t-2})) + \epsilon_t
 $$
 
-
-::: {.callout-note collapse="true"}
-## What behaviour would we expect from this model?
-
-Again we look at an R function that implements this model:
+We look at an R function that implements this model:
 
 ```{r geometric-diff-ar}
 geometric_diff_ar
@@ -471,7 +474,7 @@ sc_forecasts |>
 ```
 
 ::: {.callout-tip}
-## Take 5 minutes
+## Take 2 minutes
 What do you think of the PIT histograms?
 :::
 
