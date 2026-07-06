@@ -595,27 +595,71 @@ The best weighted ensembles only slightly outperform the simple mean, and someti
 ::: {.callout-note .optional collapse="true"}
 ## Fine-tuning weights
 
-There are many methods for weighting among multiple models, broadly along a spectrum of how crude or fine-tuned the weights are.
-Some other examples at each extreme are:
+Any weighting method you use requires a trade-off: how much to optimise for past performance, versus how much to allow that a currently poor model may recover. For example, some choices might be:
 
-- **Filtering (crudest)** Dropping a model altogether from the ensemble is equivalent to assigning it a weight of zero.
-- **Quantile regression averaging (fine-tuned)** Weights are chosen directly to give the best score on past data; this can also be optimised separately per forecast horizon.
-  This is the most flexible, and at the most risk of overfitting.
-
-In all methods, there is a trade-off in how much to optimise for past performance, versus how much to allow for the possibility that those models recover in future.
-This also involves deciding on the period of past performance that's relevant (e.g. all time, or only recent).
+- **How many past forecasts do you weight over?** More history stabilises the weights but is slower to adapt; less history adapts quickly but is noisier.
+- **Which period counts as relevant?** All time, or only recent weeks — this trades off responsiveness against stability.
+- **How flexible should the weights be?** Whether to use weights per-model, per-horizon, or per-quantile; each added degree of freedom can improve the fit on past data but risks overfitting the future.
 :::
 
-## Quantity, quality, and the combination puzzle
+::: {.callout-note .optional collapse="true"}
+## Quantile Regression Averaging
 
-Ensembles do tend to beat their component models in predictive accuracy, but a stubborn result is the "forecast combination puzzle".
-A simple, equally weighted average is very hard to beat with more sophisticated weighting [@amaralPostprocessingWeightedCombination2025].
-This is because weights have to be estimated, and that estimation is itself uncertain, especially with few past forecasts.
+**Quantile regression averaging (QRA)** treats ensemble weighting as a regression problem. 
+QRA fits the model weights directly against past observed outcomes to optimise the score. 
+Because it is a regression, it can even fit a separate set of weights for each forecast horizon (or even each quantile), letting the ensemble trust different models at short versus long horizons.
+Where the linear opinion pool mixes the models' full distributions, QRA works directly on their quantiles. 
+
+It is available in the `qrensemble` package. The code below fits a QRA ensemble for each forecast date, using up to 3 weeks of previous forecasts, but is left unevaluated here for self-study.
+
+```{r qra, eval=FALSE}
+
+qra_by_forecast <- function(
+  quantile_forecasts,
+  forecast_dates,
+  group = c("target_end_date"),
+  ...
+) {
+  lapply(forecast_dates, \(x) {
+    quantile_forecasts |>
+      mutate(target_end_date = x) |>
+      dplyr::filter(origin_day <= x) |>
+      dplyr::filter(origin_day >= x - (3 * 7 + 1)) |>
+      dplyr::filter(origin_day == x | day <= x) |>
+      qrensemble::qra(
+        group = group,
+        target = c(origin_day = x),
+        ...
+      )
+  })
+}
+
+## a single optimised ensemble, shared across all horizons
+qra_ensembles_obj <- qra_by_forecast(
+  quantile_forecasts,
+  forecast_dates[-1],
+  group = c("target_end_date")
+)
+
+## or a separate optimised ensemble per forecast horizon
+qra_by_horizon_obj <- qra_by_forecast(
+  quantile_forecasts,
+  forecast_dates[-c(1:2)],
+  group = c("horizon", "target_end_date")
+)
+```
+:::
+
+::: {.callout-note .optional collapse="true"}
+## The forecast combination puzzle
+
+Ensembles do tend to beat their component models in predictive accuracy. 
+But it is very hard to beat a simple, equally weighted average, even with more sophisticated weighting procedures [@amaralPostprocessingWeightedCombination2025].
+This is known as the "forecast combination puzzle". 
+It's because weights have to be estimated, and that estimation is itself uncertain, especially with few past forecasts.
 A good working prior is that equal weights are hard to beat.
 
-What does seem to make a difference is adding additional models to the ensemble, which adds variance.
-Yet after a point this comes with diminishing returns, because this benefit depends on how independent the models really are.
-Two models that share assumptions will add less useful information than two different but plausible views [@fox2024].
+:::
 
 ::: {.callout-note .optional collapse="true"}
 ## Combining models from different modellers
