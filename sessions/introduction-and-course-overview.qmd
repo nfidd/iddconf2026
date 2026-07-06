@@ -3,8 +3,6 @@ title: "Introduction and course overview"
 order: 0
 ---
 
-[From an epidemiological line list to informing decisions in real-time](slides/from-line-list-to-decisions)
-
 ### Aim of the workshop
 
 Data collected in an outbreak, or in routine surveillance, is used to answer questions like
