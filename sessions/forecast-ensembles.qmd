@@ -690,7 +690,7 @@ This typically involves:
 - Combining in an ensemble, which becomes the focus of public communication
 
 **A process:** An alternative view is to focus on the collaborative process of creating an ensemble from multiple modellers.
-For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers[@medleyConsensusEvidenceRole2022a].
+For example, in the UK during COVID-19, the SPI-M-O group of modellers provided consensus equally-averaged forecasts as part of a qualitative narrative presented to policy-makers [@medleyConsensusEvidenceRole2022a].
 This approach typically involves:
 
 - Selective recruitment among known modellers
