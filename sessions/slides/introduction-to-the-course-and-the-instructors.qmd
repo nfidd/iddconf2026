@@ -1,15 +1,15 @@
 ---
-title: "Introduction to the course and the instructors"
+title: "Introduction to the workshop and the instructors"
 author: "What is a forecast, and is it any good?"
 format:
   revealjs:
     output: slides/introduction-to-the-course-and-the-instructors.html
-    footer: "Introduction to the course and the instructors"
+    footer: "Introduction to the workshop and the instructors"
     chalkboard: true
 ---
 
 ```{r instructors}
-instructors <- c("sbfnk", "seabbs", "kathsherratt")
+instructors <- c("seabbs", "kathsherratt")
 ```
 
 ```{r get_contributors}
@@ -23,12 +23,16 @@ whoarewe <- lapply(sort(instructors), \(instructor) {
 })
 ```
 
-# Why this course?
+# Why this workshop?
 
 ::: {.incremental}
-- common questions in outbreak response
-- easy to make mistakes
-- no comprehensive training resource
+- forecasts are common in outbreak response and increasingly feed into decisions
+- it is easy to make a forecast and much harder to know whether it is any good
+- combining forecasts across models often helps, but only if we can measure it
+:::
+
+::: {.fragment}
+A short, hands-on taster focused on forecasting and whether a forecast is any good, drawn from the fuller [NFIDD course](https://nfidd.github.io/nfidd/).
 :::
 
 # Who are we?
@@ -55,11 +59,12 @@ Introduce yourself with:
 - where you travelled from
 - why you're here
 
-# How the course works
+# How the workshop works
 
 ::: {.incremental}
 - each session opens with a short introduction
 - you work through the material hands-on, and we stop at several points to discuss observations and learnings together
+- we work throughout from forecasts made earlier, so you can focus on interpreting and evaluating them without waiting for models to fit
 - *optional* boxes and the "Going further" sections: skip these on a first pass and come back to them later
 :::
 
