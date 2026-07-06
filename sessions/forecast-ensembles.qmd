@@ -684,7 +684,7 @@ We could look at their value in two ways:
 ::: {.callout-note}
 
 **Ensemble as a product:** 
-Ensembles offer consistently more performant forecasts: as in machine learning, an ensemble of individually weak models can still perform well together.
+Ensembles offer consistently more performant forecasts: as in machine learning for example, where even an ensemble of individually weak models can still perform well together.
 In public health use, an ensemble might be useful as a reliable product that allows decision-makers to focus on a single result rather than interpreting across modellers' work.
 
 Such gains in reliable predictive accuracy have been the focus of large, open, collaborative projects such as the US Flu Forecast Hub [@lutzApplyingInfectiousDisease2019b] or the [European Respicast Hub](https://respicast.ecdc.europa.eu/).
